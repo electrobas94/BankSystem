@@ -3,28 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BankOrderSys.Models;
 
 namespace BankOrderSys.Controllers
 {
     public class HomeController : Controller
     {
+        [Authorize]
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
+        //[Authorize]
+        public ActionResult AddOrder()
         {
-            ViewBag.Message = "Your application description page.";
-
+            return View();
+        }
+        public ActionResult ShowOrder()
+        {
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult EditOrder()
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return View(new OrderFormView());
         }
     }
 }

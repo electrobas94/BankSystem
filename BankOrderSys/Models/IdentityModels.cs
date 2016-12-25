@@ -29,5 +29,7 @@ namespace BankOrderSys.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<BankOrderSys.Models.OrderFormView> OrderFormViews { get; set; }
     }
 }
