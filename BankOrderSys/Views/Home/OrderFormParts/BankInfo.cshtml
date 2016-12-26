@@ -1,0 +1,37 @@
+﻿@model BankOrderSys.Models.OrderFormView
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(model => model.num_score_push, htmlAttributes: new { @class = "control-label" })
+    @Html.EditorFor(model => model.num_score_push, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+    @Html.ValidationMessageFor(model => model.num_score_push, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(model => model.SWIFT, htmlAttributes: new { @class = "control-label" })
+    @Html.EditorFor(model => model.SWIFT, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+    @Html.ValidationMessageFor(model => model.SWIFT, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(model => model.BIK, htmlAttributes: new { @class = "control-label" })
+    @Html.EditorFor(model => model.BIK, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+    @Html.ValidationMessageFor(model => model.BIK, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group col-md-6">
+    @Html.LabelFor(model => model.num_bank_score, htmlAttributes: new { @class = "control-label" })
+    @Html.EditorFor(model => model.num_bank_score, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+    @Html.ValidationMessageFor(model => model.num_bank_score, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group col-md-12">
+    @Html.LabelFor(model => model.title_bank, htmlAttributes: new { @class = "control-label" })
+    @Html.TextArea("title_bank", htmlAttributes: new { @class = "form-control", @rows = "3" })
+    @Html.ValidationMessageFor(model => model.title_bank, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group col-md-12">
+    @Html.LabelFor(model => model.other_rec_bank, htmlAttributes: new { @class = "control-label" })
+    @Html.TextArea("other_rec_bank", htmlAttributes: new { @class = "form-control", @rows = "3" })
+    @Html.ValidationMessageFor(model => model.other_rec_bank, "", new { @class = "text-danger" })
+</div>

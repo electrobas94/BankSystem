@@ -18,7 +18,7 @@ namespace BankOrderSys.Controllers
         //[Authorize]
         public ActionResult AddOrder()
         {
-            return View();
+            return View(new OrderFormView() );
         }
         public ActionResult ShowOrder()
         {
