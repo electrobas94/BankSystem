@@ -3,270 +3,316 @@
 
 <!-- 19 колонок по горизонтали не влезали, поэтому таблица растет вправо со скролом. -->
 
-@{
-    ObjectIncasation item = new ObjectIncasation();
-    Model.obj_list.Add(item);
-    /*item = new ObjectIncasation();
-    Model.obj_list.Add(item);
-    item = new ObjectIncasation();
-    Model.obj_list.Add(item);
-    item = new ObjectIncasation();
-    Model.obj_list.Add(item);
-    item = new ObjectIncasation();
-    Model.obj_list.Add(item);
-    item = new ObjectIncasation();
-    Model.obj_list.Add(item);
-    item = new ObjectIncasation();
-    Model.obj_list.Add(item);
-    item = new ObjectIncasation();
-    Model.obj_list.Add(item);
-    item = new ObjectIncasation();
-    Model.obj_list.Add(item);
-    item = new ObjectIncasation();
-    Model.obj_list.Add(item);
-    item = new ObjectIncasation();
-    Model.obj_list.Add(item);
-    item = new ObjectIncasation();
-    Model.obj_list.Add(item);
-    item = new ObjectIncasation();
-    Model.obj_list.Add(item);
-    item = new ObjectIncasation();
-    Model.obj_list.Add(item);
-    item = new ObjectIncasation();
-    Model.obj_list.Add(item);*/
-}
-
-<div class="col-md-12" style="overflow-x:scroll">
-    <form id="obj_list" method="post" action="/Home/AddObj">
+<div id="wrapper2" class="col-md-12 double-scroll" style="overflow-x:scroll">
+    <form id="obj_list_incas" method="post" action="/Home/AddObj">
         <table class="table table-striped table-bordered">
             <col width="260" />
             <thead>
                 <tr>
                     <th>Описание</th>
                     @{
-                        int i = 0;
+                    int i = 0;
                     }
 
                     @foreach (var a in Model.obj_list)
                     {
-                        <th>Объект №@(++i)</th>
+                    <th>Объект №@(++i)</th>
                     }
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>Желательное время сдачи наличных</td>
-                    @foreach (var a in Model.obj_list)
+                    @{
+                    i = 0;
+                    }
+                    @for ( i = 0; i < Model.obj_list.Count; i++)
                     {
-                        <td><input type="time" class="form-control" name="time" /></td>
+                    <td><input type="time" class="form-control" name="obj_list[@i].time" /></td>
                     }
                 </tr>
                 <tr>
                     <td>Способ сдачи денежной наличности</td>
-                    @foreach (var a in Model.obj_list)
+                    @{
+                    i = 0;
+                    }
+                    @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                        <td>
-                            <select class="form-control" name="type_get_money">
-                                <option>-</option>
-                                <option>1</option>
-                            </select>
-                        </td>
+                    <td>
+                        <select class="form-control" name="obj_list[@i].type_get_money">
+                            <option>-</option>
+                            <option>1</option>
+                        </select>
+                    </td>
                     }
                 </tr>
                 <tr>
                     <td>Периодичность оказания инкассаторских услуг</td>
-                    @foreach (var a in Model.obj_list)
+                    @{
+                    i = 0;
+                    }
+                    @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                        <td>
-                            <select class="form-control" name="period">
-                                <option>-</option>
-                                <option>1</option>
-                            </select>
-                        </td>
+                    <td>
+                        <select class="form-control" name="obj_list[@i].period">
+                            <option>-</option>
+                            <option>1</option>
+                        </select>
+                    </td>
                     }
                 </tr>
                 <tr>
                     <td>День недели</td>
-                    @foreach (var a in Model.obj_list)
+                    @{
+                    i = 0;
+                    }
+                    @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                        <td>
-                            <select class="form-control" name="week_day">
-                                <option>-</option>
-                                <option>Понедельник</option>
-                                <option>Вторник</option>
-                                <option>Среда</option>
-                                <option>Четверг</option>
-                                <option>Пятница</option>
-                                <option>Субота</option>
-                                <option>Воскресенье</option>
-                            </select>
-                        </td>
+                    <td>
+                        <select class="form-control" name="obj_list[@i].week_day">
+                            <option>-</option>
+                            <option>Понедельник</option>
+                            <option>Вторник</option>
+                            <option>Среда</option>
+                            <option>Четверг</option>
+                            <option>Пятница</option>
+                            <option>Субота</option>
+                            <option>Воскресенье</option>
+                        </select>
+                    </td>
                     }
                 </tr>
                 <tr>
                     <td>Предполагаемый объем денежной наличности</td>
-                    @foreach (var a in Model.obj_list)
+                    @{
+                    i = 0;
+                    }
+                    @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                        <td>
-                            <input class="form-control" type="number" name="count_money" min="1" step="0.01" />
-                        </td>
+                    <td>
+                        <input class="form-control" type="number" name="obj_list[@i].count_money" min="1" step="0.01" />
+                    </td>
                     }
                 </tr>
                 <tr>
                     <td>Код валюты</td>
-                    @foreach (var a in Model.obj_list)
+                    @{
+                    i = 0;
+                    }
+                    @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                        <td>
-                            <select class="form-control" name="code_money">
-                                <option>-</option>
-                                <option>1</option>
-                            </select>
-                        </td>
+                    <td>
+                        <select class="form-control" name="obj_list[@i].code_money">
+                            <option>-</option>
+                            <option>1</option>
+                        </select>
+                    </td>
                     }
                 </tr>
                 <tr>
                     <td>Руководитель объекта</td>
-                    @foreach (var a in Model.obj_list)
+                    @{
+                    i = 0;
+                    }
+                    @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                        <td>
-                            <input class="form-control" type="text" name="boss_object" />
-                        </td>
+                    <td>
+                        <input class="form-control" type="text" name="obj_list[@i].boss_object" />
+                    </td>
                     }
                 </tr>
                 <tr>
                     <td>Желательная дата начала обслуживания</td>
-                    @foreach (var a in Model.obj_list)
+                    @{
+                    i = 0;
+                    }
+                    @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                        <td>
-                            <input class="form-control" type="date" name="start_data" />
-                        </td>
+                    <td>
+                        <input class="form-control" type="date" name="obj_list[@i].start_data" />
+                    </td>
                     }
                 </tr>
                 <tr>
                     <td>Рабочие дни</td>
-                    @foreach (var a in Model.obj_list)
+                    @{
+                    i = 0;
+                    }
+                    @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                        <td></td>
+                    <td></td>
                     }
 
                 </tr>
                 <tr>
                     <td align="right">C:</td>
-                    @foreach (var a in Model.obj_list)
+                    @{
+                    i = 0;
+                    }
+                    @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                        <td><input type="time" class="form-control col-lg-6" name="time" /></td>
+                    <td><input type="time" class="form-control col-lg-6" name="time" /></td>
                     }
                 </tr>
                 <tr>
                     <td align="right">До:</td>
-                    @foreach (var a in Model.obj_list)
+                    @{
+                    i = 0;
+                    }
+                    @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                        <td><input type="time" class="form-control col-lg-6" name="time" /></td>
+                    <td><input type="time" class="form-control col-lg-6" name="time" /></td>
                     }
                 </tr>
 
                 <tr>
                     <td>Субота</td>
-                    @foreach (var a in Model.obj_list)
+                    @{
+                    i = 0;
+                    }
+                    @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                        <td></td>
+                    <td></td>
                     }
 
                 </tr>
                 <tr>
                     <td align="right">C:</td>
-                    @foreach (var a in Model.obj_list)
+                    @{
+                    i = 0;
+                    }
+                    @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                        <td><input type="time" class="form-control col-lg-6" name="time" /></td>
+                    <td><input type="time" class="form-control col-lg-6" name="time" /></td>
                     }
                 </tr>
                 <tr>
                     <td align="right">До:</td>
-                    @foreach (var a in Model.obj_list)
+                    @{
+                    i = 0;
+                    }
+                    @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                        <td><input type="time" class="form-control" name="time" /></td>
+                    <td><input type="time" class="form-control" name="time" /></td>
                     }
                 </tr>
 
                 <tr>
                     <td>Воскресенье</td>
-                    @foreach (var a in Model.obj_list)
+                    @{
+                    i = 0;
+                    }
+                    @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                        <td></td>
+                    <td></td>
                     }
 
                 </tr>
                 <tr>
                     <td align="right">C:</td>
-                    @foreach (var a in Model.obj_list)
+                    @{
+                    i = 0;
+                    }
+                    @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                        <td><input type="time" class="form-control" name="time" /></td>
+                    <td><input type="time" class="form-control" name="time" /></td>
                     }
                 </tr>
                 <tr>
                     <td align="right">До:</td>
-                    @foreach (var a in Model.obj_list)
+                    @{
+                    i = 0;
+                    }
+                    @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                        <td><input type="time" class="form-control" name="time" /></td>
+                    <td><input type="time" class="form-control" name="time" /></td>
                     }
                 </tr>
 
                 <tr>
                     <td>Тип адреса</td>
-                    @foreach (var a in Model.obj_list)
+                    @{
+                    i = 0;
+                    }
+                    @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                        <td>@a.type_adress</td>
+                        <td>
+                            <select class="form-control" name="obj_list[@i].type_adress">
+                                <option>-</option>
+                                <option>1</option>
+                            </select>
+                        </td>
                     }
                 </tr>
                 <tr>
                     <td>Тип населенного пункта</td>
-                    @foreach (var a in Model.obj_list)
+                    @{
+                    i = 0;
+
+                    }
+                    @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                        <td>
-                            <select class="form-control" name="type_city">
-                                <option>-</option>
-                                <option>1</option>
-                            </select>
-                        </td>
+                    <td>
+                        <select class="form-control" name="obj_list[@i].type_city">
+                            <option>-</option>
+                            <option>1</option>
+                        </select>
+                    </td>
                     }
                 </tr>
                 <tr>
                     <td>Наименование населенного пункта</td>
-                    @foreach (var a in Model.obj_list)
+                    @{
+                    i = 0;
+                    }
+                    @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                        <td><input type="text" class="form-control" name="title_citi" /></td>
+                    <td><input type="text" class="form-control" name="obj_list[@i].title_citi" /></td>
                     }
                 </tr>
                 <tr>
                     <td>Улица</td>
-                    @foreach (var a in Model.obj_list)
+                    @{
+                    i = 0;
+                    }
+                    @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                        <td><input type="text" class="form-control" name="title_street" /></td>
+                    <td><input type="text" class="form-control" name="obj_list[@i].title_street" /></td>
                     }
                 <tr>
                     <td>Номер дома (владение)</td>
-                    @foreach (var a in Model.obj_list)
+                    @{
+                    i = 0;
+                    }
+                    @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                        <td><input type="text" class="form-control" name="num_build" /></td>
+                    <td><input type="text" class="form-control" name="obj_list[@i].num_build" /></td>
                     }
                 </tr>
                 <tr>
                     <td>Корпус (строение)</td>
-                    @foreach (var a in Model.obj_list)
+                    @{
+                    i = 0;
+                    }
+                    @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                        <td><input type="text" class="form-control" name="title_part" /></td>
+                    <td><input type="text" class="form-control" name="obj_list[@i].title_part" /></td>
                     }
                 </tr>
                 <tr>
                     <td>Инкассаторская услуга</td>
-                    @foreach (var a in Model.obj_list)
+                    @{
+                    i = 0;
+                    }
+                    @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                        <td>
-                            <select class="form-control" name="type_order">
-                                <option>-</option>
-                                <option>1</option>
-                            </select>
-                        </td>
+                    <td>
+                        <select class="form-control" name="obj_list[@i].type_order">
+                            <option>-</option>
+                            <option>1</option>
+                        </select>
+                    </td>
                     }
                 </tr>
             </tbody>

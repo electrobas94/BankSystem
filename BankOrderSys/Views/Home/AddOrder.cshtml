@@ -18,8 +18,8 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group col-md-6">
                 @Html.LabelFor(model => model.type, htmlAttributes: new { @class = "control-label" })
-                <select class="form-control" name="type">
-                    <option>1</option>
+                <select class="form-control" name="type" value="@Model.type">
+                    <option></option>
                     <option>1</option>
                 </select>
                 @Html.ValidationMessageFor(model => model.type, "", new { @class = "text-danger" })
@@ -28,7 +28,7 @@
             <div class="form-group col-md-6">
                 @Html.LabelFor(model => model.bank_dep, htmlAttributes: new { @class = "control-label" })
                 <select class="form-control" name="bank_dep">
-                    <option>1</option>
+                    <option></option>
                     <option>1</option>
                 </select>
                 @Html.ValidationMessageFor(model => model.BIK, "", new { @class = "text-danger" })
@@ -45,7 +45,7 @@
                                 </a>
                             </h4>
                         </div>
-                        <div id="collapse1" class="panel-collapse collapse in">
+                        <div id="collapse1" class="panel-collapse collapse">
                             <div class="panel-body">
                                 @Html.Partial("OrderFormParts/ClientInfo", Model)
                             </div>
@@ -84,25 +84,26 @@
                     <div class="panel panel-default">
                         <div class="panel-heading" style="overflow-y:auto; padding-left:0px; margin-left:0px">
                                 <div class="col-md-12">
-                                    <div class="col-md-5" style="padding-left:0px; margin-left:0px">
+                                    <div class="col-md-7" style="padding-left:0px; margin-left:0px">
                                         <h4 class="panel-title">
                                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
                                                 + Обьекты инкасации
                                             </a>
                                         </h4>
                                     </div>
-                                        <div class="col-lg-7">
+                                        <div class="col-md-5">
                                             <div class="btn-group">
-                                                <button type="button" class="btn btn-default" onclick="$('#obj_list').submit();">
+                                                <button type="submit" value=":vzryb" formmethod="post" formaction="/Home/AddObj" class="btn btn-default">
                                                     Добавить объект
                                                 </button>
-                                                <button type="button" class="btn btn-default">Применить изменения</button>
-                                                <button type="button" class="btn btn-default">Удалить последний объект</button>
-                                            </div>
+                                                <button type="submit" value=":vzryb" formmethod="post" formaction="/Home/DelObj" class="btn btn-default">
+                                                    Удалить последний объект
+                                                </button>
+</div>
                                         </div>
                                 </div>
                         </div>
-                        <div id="collapse4" class="panel-collapse collapse">
+                        <div id="collapse4" class="panel-collapse collapse in">
                             <div class="panel-body">
                                 @Html.Partial("OrderFormParts/ObjectsList", Model)
                             </div>

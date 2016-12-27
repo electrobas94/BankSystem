@@ -38,46 +38,46 @@ namespace BankOrderSys.Models
         public int id { get; set; }
         public string user_name { get; set; }
         public string number { get; set; }
-        [Required]
+        //[Required]
         [Display(Name = "Тип заявки")]
         public string type { get; set; }
         public DateTime date { get; set; }
         public string status { get; set; }
-        [Required]
+        //[Required]
         [Display(Name = "Подразделение банка")]
         public string bank_dep { get; set; }
-        [Required]
+        //[Required]
         [Display(Name = "ИИН/КИО")]
         public string INN_KIO { get; set; }
         [Display(Name = "КПП")]
         public string kpp { get; set; }
-        [Required]
+        //[Required]
         [StringLength(250, ErrorMessage = "{0} должен быть не меньше {2} символов.", MinimumLength = 0)]
         [Display(Name = "Полное наименование организации")]
         public string title_org { get; set; }
         [Display(Name = "ОГРН")]
         public string OGRN { get; set; }
-        [Required]
+        //[Required]
         [Display(Name = "Фамилия Имя Отчество")]
         public string name_worker { get; set; }
         [Required]
         [Display(Name = "Номер телефона, факса уполномоченного сотрудника")]
         public string phone_worker { get; set; }
-        [Required]
+        //[Required]
         [Display(Name = "Номер счета зачисления")]
         public string num_score_push { get; set; }
-        [Required]
+        //[Required]
         [Display(Name = "БИК")]
         public string BIK { get; set; }
-        [Required]
+        //[Required]
         [Display(Name = "Номер корр. счета банка")]
         public string num_bank_score { get; set; }
-        [Required]
+        //[Required]
         [Display(Name = "Наименование банка")]
         public string title_bank { get; set; }
         [Display(Name = "Иные реквизиты банка зачисления валюты")]
         public string other_rec_bank { get; set; }
-        [Required]
+        //[Required]
         [Display(Name = "SWIFT")]
         public string SWIFT { get; set; }
 

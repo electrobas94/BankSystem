@@ -16,9 +16,12 @@ namespace BankOrderSys.Controllers
         }
 
         //[Authorize]
-        public ActionResult AddOrder()
+        public ActionResult AddOrder(OrderFormView order)
         {
-            return View(new OrderFormView() );
+            if( order == null)
+                return View(new OrderFormView() );
+            else
+                return View(order);
         }
         public ActionResult ShowOrder()
         {
@@ -28,6 +31,24 @@ namespace BankOrderSys.Controllers
         public ActionResult EditOrder()
         {
             return View(new OrderFormView());
+        }
+
+        [HttpPost]
+        public ActionResult AddObj(OrderFormView order)
+        {
+            ObjectIncasation item = new ObjectIncasation();
+            order.obj_list.Add(item);
+
+            return View("AddOrder", order);
+        }
+
+        [HttpPost]
+        public ActionResult DelObj(OrderFormView order)
+        {
+            if (order.obj_list.Count != 0)
+                order.obj_list.Remove(order.obj_list.Last());
+
+            return View("AddOrder", order);
         }
     }
 }
