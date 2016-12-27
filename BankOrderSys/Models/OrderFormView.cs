@@ -11,7 +11,14 @@ namespace BankOrderSys.Models
     {
         [Key]
         public int id_obj { get; set; }
-        public DateTime time { get; set; }
+        public string time { get; set; }
+        public string work_time_start { get; set; }
+        public string work_time_end { get; set; }
+        public string saturd_time_start { get; set; }
+        public string saturd_time_end { get; set; }
+        public string sund_time_start { get; set; }
+        public string sund_time_end { get; set; }
+
         public string type_get_money { get; set; }
         public string period { get; set; }
         public string week_day { get; set; }
@@ -41,7 +48,7 @@ namespace BankOrderSys.Models
         //[Required]
         [Display(Name = "Тип заявки")]
         public string type { get; set; }
-        public DateTime date { get; set; }
+        public string date { get; set; }
         public string status { get; set; }
         //[Required]
         [Display(Name = "Подразделение банка")]

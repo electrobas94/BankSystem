@@ -20,7 +20,15 @@
                 @Html.LabelFor(model => model.type, htmlAttributes: new { @class = "control-label" })
                 <select class="form-control" name="type" value="@Model.type">
                     <option></option>
-                    <option>1</option>
+                    @foreach (var a in ViewBag.type_order_l)
+                    {
+
+                        string str = "";
+                        if (a == Model.type)
+                        { str = "selected"; }
+
+                        <option @str>@a</option>
+                    }
                 </select>
                 @Html.ValidationMessageFor(model => model.type, "", new { @class = "text-danger" })
             </div>
@@ -29,7 +37,15 @@
                 @Html.LabelFor(model => model.bank_dep, htmlAttributes: new { @class = "control-label" })
                 <select class="form-control" name="bank_dep">
                     <option></option>
-                    <option>1</option>
+                    @foreach (var a in ViewBag.bank_dep_l)
+                    {
+
+                        string str = "";
+                        if (a == Model.bank_dep)
+                        { str = "selected"; }
+
+                        <option @str>@a</option>
+                    }
                 </select>
                 @Html.ValidationMessageFor(model => model.BIK, "", new { @class = "text-danger" })
             </div>
