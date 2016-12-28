@@ -18,6 +18,17 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("Система формирования заявок на инкасацию", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @{
+                    if (ViewBag.admin)
+                    {
+                        <button onclick="window.location.href = '/Home/Index?admin=0';">Выкл. Админку</button>
+                    }
+                    else
+                    {
+                        <button onclick="window.location.href = '/Home/Index?admin=1';">Вкл. Админку</button>
+                    }
+                }
+                
             </div>
             <div class="navbar-collapse collapse">
                 <!--

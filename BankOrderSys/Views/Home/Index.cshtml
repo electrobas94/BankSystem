@@ -21,6 +21,7 @@
                     <th>Подразделение банка</th>
                     <th>Название организации</th>
                     <th>Название банка</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -31,7 +32,7 @@
                 }
                         @foreach (var a in Model)
                         {
-                            if (a.user_name == User.Identity.GetUserName())
+                            if (a.user_name == User.Identity.GetUserName() || ViewBag.admin )
                             {
                                 count++;
                                 <tr onclick="window.location.href = '/Home/EditOrder?index=@a.id';"
@@ -43,6 +44,14 @@
                                     <td>@a.bank_dep</td>
                                     <td>@a.title_org</td>
                                     <td>@a.title_bank</td>
+                                    @{
+                                        if (ViewBag.admin)
+                                        {
+                                            <td  onclick="window.location.href = '/Home/Sign?id=@a.id';event.stopPropagation()" >
+                                                <button>Подписать</button>
+                                            </td>
+                                        }
+                                    }
                                 </tr>
 
                             }

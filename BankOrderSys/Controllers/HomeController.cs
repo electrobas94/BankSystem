@@ -27,6 +27,24 @@ namespace BankOrderSys.Controllers
         IEnumerable<OrderFormView> sort_list;
 
         [Authorize]
+        [HttpGet]
+        public ActionResult Sign(int id)
+        {
+            OrderFormView tmp = db_man.OrderList.Find(id);
+
+            tmp.status = "Подписан";
+
+            db_man.Entry(tmp).State = EntityState.Modified;
+            try
+            {
+                db_man.SaveChanges();
+            }
+            catch { }
+
+            return RedirectToAction("Index");//"Index"
+        }
+
+        [Authorize]
         public ActionResult Index()
         {
             return View(db_man.OrderList);
@@ -34,8 +52,13 @@ namespace BankOrderSys.Controllers
 
         [Authorize]
         [HttpGet]
-        public ActionResult Index(int? sort)
+        public ActionResult Index(int? sort, int? admin)
         {
+            if (admin == 1)
+                ViewBag.admin = true;
+            else if(admin == 0)
+                ViewBag.admin = false;
+
             if (sort != null)
             {
                 if (cur_sort == sort)
@@ -156,6 +179,7 @@ namespace BankOrderSys.Controllers
         public HomeController()
         {
             sort_list = db_man.OrderList;
+            ViewBag.admin = false;
 
             ViewBag.week_days_l = week_days_l;
             ViewBag.period_list = period_list;
