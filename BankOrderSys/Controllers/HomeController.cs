@@ -71,12 +71,26 @@ namespace BankOrderSys.Controllers
         public ActionResult EditOrder(OrderFormView order)
         {
             db_man.Entry(order).State = EntityState.Modified;
-            //try
+            try
             {
                 db_man.SaveChanges();
             }
-            //catch { }
+            catch { }
 
+            return RedirectToAction("Index");
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult DelOrder(OrderFormView order)
+        {
+            
+            try
+            {
+                db_man.Entry(order).State = EntityState.Deleted;
+                db_man.SaveChanges();
+            }
+            catch { }
             return RedirectToAction("Index");
         }
 
