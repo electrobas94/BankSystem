@@ -2,7 +2,13 @@
 @using Microsoft.AspNet.Identity
 
 <div class="row">
-    <h2>Список ваших запросов на инкасацию. <button class="btn btn-default btn-lg" style="display:inline-block"><a style="color:black" href="/Home/AddOrder">Создать новую Заявку</a></button></h2>
+    <h2>Список ваших заявок на инкасацию. 
+        <a style="color:black" href="/Home/AddOrder">
+            <button class="btn btn-default btn-lg" style="display:inline-block">
+                Создать новую Заявку
+            </button>
+        </a>
+    </h2>
     <p>Для просмотра и редактирования выберете элемент таблицы</p> 
     <div class="col-md-12">
         <table class="table table-striped">
@@ -11,27 +17,49 @@
                     <th>Номер</th>
                     <th>Дата</th>
                     <th>Статус</th>
+                    <th>Тип заявки</th>
+                    <th>Подразделение банка</th>
+                    <th>Название организации</th>
+                    <th>Название банка</th>
                 </tr>
             </thead>
             <tbody>
                 @{
                     string fmt = "00000";
-                    string formatString = " {0,15:" + fmt + "}";
+                    int count = 0;
                 }
                         @foreach (var a in Model)
                         {
-                            //if (a.user_name == User.Identity.GetUserName())
+                            if (a.user_name == User.Identity.GetUserName())
                             {
+                                count++;
                                 <tr>
-                                    <td>2-@a.id.ToString(formatString)</td>
+                                    <td>2-@a.id.ToString(fmt)</td>
                                     <td>@a.date</td>
                                     <td>@a.status</td>
-                                    <td></td>
+                                    <td>@a.type</td>
+                                    <td>@a.bank_dep</td>
+                                    <td>@a.title_org</td>
+                                    <td>@a.title_bank</td>
                                 </tr>
 
                             }
                         }
+                @{ 
+                    if(count == 0 )
+                    {
+                        <tr>
+                            <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                        </tr>
+                    }
+                }
             </tbody>
         </table>
+        @{
+            if (count == 0)
+            {
+                <p>К сожалению у вас нет заявок</p>
+            }
+        }
     </div>
 </div>
