@@ -59,7 +59,7 @@ namespace BankOrderSys.Models
         [Display(Name = "КПП")]
         public string kpp { get; set; }
         //[Required]
-        [StringLength(250, ErrorMessage = "{0} должен быть не меньше {2} символов.", MinimumLength = 0)]
+        //[StringLength(250, ErrorMessage = "{0} должен быть не меньше {2} символов.", MinimumLength = 0)]
         [Display(Name = "Полное наименование организации")]
         public string title_org { get; set; }
         [Display(Name = "ОГРН")]

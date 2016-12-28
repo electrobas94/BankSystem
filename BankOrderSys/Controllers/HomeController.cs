@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BankOrderSys.Models;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 
 namespace BankOrderSys.Controllers
 {
@@ -24,7 +26,7 @@ namespace BankOrderSys.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            return View();
+            return View(db_man.OrderList);
         }
 
         [Authorize]
@@ -37,8 +39,21 @@ namespace BankOrderSys.Controllers
         [HttpPost]
         public ActionResult AddOrder(OrderFormView order)
         {
-            db_man.OrderList.Add(order);
-            return RedirectToAction("Index");
+            //db_man.OrderList.Add(order);
+            //db_man.SaveChanges();
+            db_man.Entry(order).State = EntityState.Added;
+            try
+            {
+                db_man.SaveChanges();
+            }
+            catch { }
+
+            //string tmp = "";
+            //foreach (DbEntityValidationResult  a in db_man.GetValidationErrors())
+                //foreach ( var b in a.ValidationErrors)
+                    //tmp += b.ErrorMessage;
+
+            return RedirectToAction("Index");//"Index"
             //return View(new OrderFormView());
         }
 

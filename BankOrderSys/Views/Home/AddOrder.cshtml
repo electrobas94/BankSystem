@@ -129,11 +129,12 @@
                 </div>
             </div>
 
-            <input type="hidden" name="date" value="@DateTime.Today" />
+            <input type="hidden" name="date" value="@DateTime.Today.Date" />
             <input type="hidden" name="user_name" value="@User.Identity.GetUserName()" />
-
-            <div class="form-group">
-                <div class="btn-group">
+            <input type="hidden" name="status" value="В обработке" />
+            
+            <div class="form-group col-lg-12">
+                <div class="btn-group col-lg-4">
                     <input type="submit" value="Создать" class="btn btn-default"  formmethod="post" formaction="/Home/AddOrder"/>
                     <input type="submit" value="Отмена" class="btn btn-default" formmethod="post" formaction="/Home/Index" />
                 </div>

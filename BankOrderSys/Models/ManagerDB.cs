@@ -6,8 +6,13 @@ using System.Data.Entity;
 
 namespace BankOrderSys.Models
 {
+
     public class ManagerDB:DbContext
     {
+        public ManagerDB()
+            : base("DefaultConnection")
+        {
+        }
         public DbSet<OrderFormView> OrderList { get; set; }
     }
 }
