@@ -23,10 +23,45 @@ namespace BankOrderSys.Controllers
 
         ManagerDB db_man = new ManagerDB();
 
+        int? cur_sort = 1;
+        IEnumerable<OrderFormView> sort_list;
+
         [Authorize]
         public ActionResult Index()
         {
             return View(db_man.OrderList);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult Index(int? sort)
+        {
+            if (sort != null)
+            {
+                if (cur_sort == sort)
+                    sort_list = sort_list.Reverse();
+                else
+                {
+                    switch (sort)
+                    {
+                        case 0:
+                            sort_list = db_man.OrderList.OrderBy(obj => obj.date);
+                            break;
+                        case 1:
+                            sort_list = db_man.OrderList.OrderBy(obj => obj.number);
+                            break;
+                        case 2:
+                            sort_list = db_man.OrderList.OrderBy(obj => obj.status);
+                            break;
+                    }
+
+                    cur_sort = sort;
+                }
+            }
+            else
+                sort_list = db_man.OrderList;
+
+            return View(sort_list);
         }
 
         [Authorize]
@@ -120,6 +155,8 @@ namespace BankOrderSys.Controllers
 
         public HomeController()
         {
+            sort_list = db_man.OrderList;
+
             ViewBag.week_days_l = week_days_l;
             ViewBag.period_list = period_list;
             ViewBag.type_servece_l = type_servece_l;
