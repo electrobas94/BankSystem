@@ -1,5 +1,6 @@
 ﻿@model BankOrderSys.Models.OrderFormView
 @using BankOrderSys.Models
+@using Microsoft.AspNet.Identity
 
 @{
     ViewBag.Title = "AddOrder";
@@ -128,11 +129,13 @@
                 </div>
             </div>
 
-            @Html.Hidden("date")
+            <input type="hidden" name="date" value="@DateTime.Today" />
+            <input type="hidden" name="user_name" value="@User.Identity.GetUserName()" />
 
             <div class="form-group">
-                <div class="col-md-10">
-                    <input type="submit" value="Создать" class="btn btn-default" />
+                <div class="btn-group">
+                    <input type="submit" value="Создать" class="btn btn-default"  formmethod="post" formaction="/Home/AddOrder"/>
+                    <input type="submit" value="Отмена" class="btn btn-default" formmethod="post" formaction="/Home/Index" />
                 </div>
             </div>
 

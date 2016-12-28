@@ -19,18 +19,30 @@ namespace BankOrderSys.Controllers
         List<string> type_order_l = new List<string>();
         List<string> bank_dep_l = new List<string>();
 
+        ManagerDB db_man = new ManagerDB();
+
         [Authorize]
         public ActionResult Index()
         {
             return View();
         }
 
-        //[Authorize]
-        public ActionResult AddOrder(OrderFormView order)
+        [Authorize]
+        public ActionResult AddOrder()
         {
-            return View(new OrderFormView() );
+            return View( new OrderFormView() );
         }
 
+        [Authorize]
+        [HttpPost]
+        public ActionResult AddOrder(OrderFormView order)
+        {
+            db_man.OrderList.Add(order);
+            return RedirectToAction("Index");
+            //return View(new OrderFormView());
+        }
+
+        [Authorize]
         [HttpPost]
         public ActionResult AddObj(OrderFormView order)
         {
@@ -40,6 +52,7 @@ namespace BankOrderSys.Controllers
             return View("AddOrder", order);
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult DelObj(OrderFormView order)
         {
