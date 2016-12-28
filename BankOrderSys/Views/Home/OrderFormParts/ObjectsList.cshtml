@@ -29,7 +29,7 @@
                     }
                     @for ( i = 0; i < Model.obj_list.Count; i++)
                     {
-                    <td><input type="time" class="form-control" name="obj_list[@i].time" value="@Model.obj_list.ElementAt(i).time" /></td>
+                    <td><input type="time" class="form-control" name="obj_list[@i].time" value="@Model.obj_list.ElementAt(i).time" required/></td>
                     }
                 </tr>
                 <tr>
@@ -40,7 +40,7 @@
                     @for (i = 0; i < Model.obj_list.Count; i++)
                     {
                     <td>
-                        <select class="form-control" name="obj_list[@i].type_get_money">
+                        <select class="form-control" name="obj_list[@i].type_get_money" required>
                             <option></option>
                             @foreach (var a in ViewBag.type_get_money_l)
                             {
@@ -63,7 +63,7 @@
                     @for (i = 0; i < Model.obj_list.Count; i++)
                     {
                     <td>
-                        <select class="form-control" name="obj_list[@i].period">
+                        <select class="form-control" name="obj_list[@i].period" required>
                             <option></option>
                             @foreach (var a in ViewBag.period_list)
                             {
@@ -112,7 +112,8 @@
                                type="number" 
                                name="obj_list[@i].count_money" 
                                min="1" step="0.01"  
-                               value="@Model.obj_list.ElementAt(i).count_money"/>
+                               value="@Model.obj_list.ElementAt(i).count_money" 
+                               required/>
                     </td>
                     }
                 </tr>
@@ -124,7 +125,7 @@
                     @for (i = 0; i < Model.obj_list.Count; i++)
                     {
                     <td>
-                        <select class="form-control" name="obj_list[@i].code_money">
+                        <select class="form-control" name="obj_list[@i].code_money" required>
                             <option></option>
                             @foreach (var a in ViewBag.type_money_l)
                             {
@@ -147,7 +148,11 @@
                     @for (i = 0; i < Model.obj_list.Count; i++)
                     {
                     <td>
-                        <input class="form-control" type="text" name="obj_list[@i].boss_object" value="@Model.obj_list.ElementAt(i).boss_object"/>
+                        <input class="form-control" 
+                               type="text" 
+                               name="obj_list[@i].boss_object" 
+                               value="@Model.obj_list.ElementAt(i).boss_object" 
+                               required/>
                     </td>
                     }
                 </tr>
@@ -267,7 +272,7 @@
                     @for (i = 0; i < Model.obj_list.Count; i++)
                     {
                         <td>
-                            <select class="form-control" name="obj_list[@i].type_adress">
+                            <select class="form-control" name="obj_list[@i].type_adress" required>
                                 <option></option>
                                 @foreach (var a in ViewBag.type_adress_l)
                                 {
@@ -291,7 +296,7 @@
                     @for (i = 0; i < Model.obj_list.Count; i++)
                     {
                     <td>
-                        <select class="form-control" name="obj_list[@i].type_city">
+                        <select class="form-control" name="obj_list[@i].type_city" required>
                             <option></option>
                             @foreach (var a in ViewBag.type_city_l)
                             {
@@ -313,7 +318,7 @@
                     }
                     @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                    <td><input type="text" class="form-control" name="obj_list[@i].title_city" value="@Model.obj_list.ElementAt(i).title_city"/></td>
+                    <td><input type="text" class="form-control" name="obj_list[@i].title_city" value="@Model.obj_list.ElementAt(i).title_city" required/></td>
                     }
                 </tr>
                 <tr>
@@ -323,7 +328,7 @@
                     }
                     @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                    <td><input type="text" class="form-control" name="obj_list[@i].title_street" value="@Model.obj_list.ElementAt(i).title_street"/></td>
+                    <td><input type="text" class="form-control" name="obj_list[@i].title_street" value="@Model.obj_list.ElementAt(i).title_street" required/></td>
                     }
                 <tr>
                     <td>Номер дома (владение)</td>
@@ -332,7 +337,7 @@
                     }
                     @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                    <td><input type="text" class="form-control" name="obj_list[@i].num_build" value="@Model.obj_list.ElementAt(i).num_build"/></td>
+                    <td><input type="text" class="form-control" name="obj_list[@i].num_build" value="@Model.obj_list.ElementAt(i).num_build" required/></td>
                     }
                 </tr>
                 <tr>
@@ -342,7 +347,7 @@
                     }
                     @for (i = 0; i < Model.obj_list.Count; i++)
                     {
-                    <td><input type="text" class="form-control" name="obj_list[@i].title_part" value="@Model.obj_list.ElementAt(i).title_part"/></td>
+                    <td><input type="text" class="form-control" name="obj_list[@i].title_part" value="@Model.obj_list.ElementAt(i).title_part" required/></td>
                     }
                 </tr>
                 <tr>
@@ -353,7 +358,7 @@
                     @for (i = 0; i < Model.obj_list.Count; i++)
                     {
                     <td>
-                        <select class="form-control" name="obj_list[@i].type_order">
+                        <select class="form-control" name="obj_list[@i].type_order" required>
                             <option></option>
                             @foreach (var a in ViewBag.type_servece_l)
                             {
