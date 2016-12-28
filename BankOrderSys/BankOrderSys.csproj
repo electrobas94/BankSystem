@@ -281,9 +281,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Home\ShowOrder.cshtml" />
-    <Content Include="Views\Home\AddOrder.cshtml" />
-    <Content Include="Views\Home\EditOrder.cshtml" />
+    <Content Include="Views\Home\Order.cshtml" />
     <Content Include="Views\Home\OrderFormParts\ClientInfo.cshtml" />
     <Content Include="Views\Home\OrderFormParts\WorkerInfo.cshtml" />
     <Content Include="Views\Home\OrderFormParts\BankInfo.cshtml" />

@@ -12,8 +12,59 @@
     @Html.AntiForgeryToken()
 
     <div class="panel panel-default">
-        <div class="panel-heading">
-            <h1 class="panel-title">Форма создания новой заявки</h1>
+        <div class="panel-heading" style="overflow-y:auto; padding-left:0px; margin-left:0px">
+            <div class="col-md-12">
+                <div class="col-md-5" style="padding-left:0px; margin-left:0px; text-align:center">
+                    <h4>
+                        <b>
+                            Форма создания новой заявки
+                        </b>
+                    </h4>
+                </div>
+                <div class="col-md-7">
+                    <div class="btn-group pull-right">
+                        @{
+                            string title = "Отправить заявку";
+                            string adress = "AddOrder";
+
+                            if (ViewBag.edit_type == 1)
+                            {
+                                title = "Сохранить изменения";
+                                adress = "EditOrder";
+                            }
+
+                            if ( Model.status == "В обработке" || Model.status == null )
+                            {
+                                <button type="submit"
+                                       class="btn btn-default btn-lg"
+                                       formmethod="post"
+                                       formaction="/Home/@adress">
+                                    @title
+                                </button>
+
+                                if (ViewBag.edit_type == 1)
+                                {
+                                    <button type="submit"
+                                           class="btn btn-default btn-lg"
+                                           formmethod="post"
+                                           formaction="/Home/DelOrder">
+                                        Удалить заявку
+                                    </button>
+                                }
+
+                            }
+                                <button type="submit"
+                                       class="btn btn-default btn-lg"
+                                       formmethod="post"
+                                       formaction="/Home/Index">
+                                    Назад на главную
+                                </button>
+
+                        }
+
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="panel-body">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -129,16 +180,22 @@
                 </div>
             </div>
 
-            <input type="hidden" name="date" value="@DateTime.Today.Date" />
-            <input type="hidden" name="user_name" value="@User.Identity.GetUserName()" />
-            <input type="hidden" name="status" value="В обработке" />
-            
-            <div class="form-group col-lg-12">
-                <div class="btn-group col-lg-offset-7 col-lg-5">
-                    <input type="submit" value="Отправить заявку" class="btn btn-default btn-lg"  formmethod="post" formaction="/Home/AddOrder"/>
-                    <input type="submit" value="Вернутся на главную" class="btn btn-default btn-lg" formmethod="post" formaction="/Home/Index" />
-                </div>
-            </div>
+            @{
+                if (ViewBag.edit_type == 1)
+                {
+                    <input type="hidden" name="id" value="@Model.id" />
+                    <input type="hidden" name="date" value="@Model.date" />
+                    <input type="hidden" name="user_name" value="@Model.user_name" />
+                    <input type="hidden" name="status" value="@Model.status" />
+                }
+                else
+                {
+                    <input type="hidden" name="date" value="@DateTime.Today.Date" />
+                    <input type="hidden" name="user_name" value="@User.Identity.GetUserName()" />
+                    <input type="hidden" name="status" value="В обработке" />
+                }
+            }
+
 
         </div>
     </div>

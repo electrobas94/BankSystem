@@ -32,15 +32,15 @@ namespace BankOrderSys.Controllers
         [Authorize]
         public ActionResult AddOrder()
         {
-            return View( new OrderFormView() );
+            return View("Order", new OrderFormView() );
         }
 
         [Authorize]
         [HttpPost]
         public ActionResult AddOrder(OrderFormView order)
         {
-            //db_man.OrderList.Add(order);
-            //db_man.SaveChanges();
+            ViewBag.edit_type = 0;
+
             db_man.Entry(order).State = EntityState.Added;
             try
             {
@@ -58,13 +58,38 @@ namespace BankOrderSys.Controllers
         }
 
         [Authorize]
+        [HttpGet]
+        public ActionResult EditOrder(int index)
+        {
+            OrderFormView tmp = db_man.OrderList.Find(index);
+            ViewBag.edit_type = 1;
+            return View("Order",tmp );
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult EditOrder(OrderFormView order)
+        {
+            db_man.Entry(order).State = EntityState.Modified;
+            //try
+            {
+                db_man.SaveChanges();
+            }
+            //catch { }
+
+            return RedirectToAction("Index");
+        }
+
+        [Authorize]
         [HttpPost]
         public ActionResult AddObj(OrderFormView order)
         {
             ObjectIncasation item = new ObjectIncasation();
             order.obj_list.Add(item);
 
-            return View("AddOrder", order);
+            //ViewBag.edit_type = 0;
+
+            return View("Order", order);
         }
 
         [Authorize]
@@ -74,7 +99,9 @@ namespace BankOrderSys.Controllers
             if (order.obj_list.Count != 0)
                 order.obj_list.Remove(order.obj_list.Last());
 
-            return View("AddOrder", order);
+            //ViewBag.edit_type = 0;
+
+            return View("Order", order);
         }
 
         public HomeController()
