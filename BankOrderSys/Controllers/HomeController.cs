@@ -154,24 +154,24 @@ namespace BankOrderSys.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult AddObj(OrderFormView order)
+        public ActionResult AddObj(OrderFormView order, int? edit_type)
         {
             ObjectIncasation item = new ObjectIncasation();
             order.obj_list.Add(item);
 
-            //ViewBag.edit_type = 0;
+            ViewBag.edit_type = edit_type;
 
             return View("Order", order);
         }
 
         [Authorize]
         [HttpPost]
-        public ActionResult DelObj(OrderFormView order)
+        public ActionResult DelObj(OrderFormView order, int? edit_type)
         {
             if (order.obj_list.Count != 0)
                 order.obj_list.Remove(order.obj_list.Last());
 
-            //ViewBag.edit_type = 0;
+            ViewBag.edit_type = edit_type;
 
             return View("Order", order);
         }

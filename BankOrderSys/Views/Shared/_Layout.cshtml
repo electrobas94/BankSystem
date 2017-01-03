@@ -19,11 +19,11 @@
                 </button>
                 @Html.ActionLink("Система формирования заявок на инкасацию", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                 @{
-                    if (ViewBag.admin)
+                    if (ViewBag.admin != null && ViewBag.admin)
                     {
                         <button class="btn btn-default" onclick="window.location.href = '/Home/Index?admin=0';">Выкл. Админку</button>
                     }
-                    else
+                    else if(ViewBag.admin != null)
                     {
                         <button class="btn btn-default" onclick="window.location.href = '/Home/Index?admin=1';">Вкл. Админку</button>
                     }
