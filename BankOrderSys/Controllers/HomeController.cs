@@ -131,13 +131,21 @@ namespace BankOrderSys.Controllers
             //db_man.OrderList.Where( (OrderFormViewId, index) => OrderFormViewId == index );
 
             //          ¯\_(ツ)_/¯
-            
-            //if(tmp.obj_list.Count == 0) 
-            //foreach (var obj_inc in db_man.ObjectList)
-            //{
-             //   if(obj_inc.OrderFormViewId == index)
-            //        tmp.obj_list.Add(obj_inc);
-            //}
+            var obj_list = db_man.ObjectList.Where(c => c.OrderFormViewId == index );
+            if (obj_list != null)
+            {
+                //var ob = obj_list.AsEnumerable();
+                tmp.obj_list = obj_list.ToList();
+
+                /*
+                //var obj_list = db_man.ObjectList.ToList();
+                foreach (ObjectIncasation obj_inc in ob)
+                {
+                    if (obj_inc.OrderFormViewId == index)
+                        tmp.obj_list.Add(obj_inc);
+                }
+                */
+            }
 
             ViewBag.edit_type = 1;
             return View("Order", tmp );

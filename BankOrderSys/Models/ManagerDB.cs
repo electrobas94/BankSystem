@@ -16,9 +16,5 @@ namespace BankOrderSys.Models
         public DbSet<OrderFormView> OrderList { get; set; }
         public DbSet<ObjectIncasation> ObjectList { get; set; }
 
-        ~ManagerDB()
-        {
-            Dispose();
-        }
     }
 }
