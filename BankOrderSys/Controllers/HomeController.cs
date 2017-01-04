@@ -121,21 +121,26 @@ namespace BankOrderSys.Controllers
         [HttpGet]
         public ActionResult EditOrder(int index)
         {
-            OrderFormView tmp = db_man.OrderList.Find(index);
+            OrderFormView tmp = null;// db_man.OrderList.Find(index);
 
+            foreach(var order in db_man.OrderList)
+            {
+                if(order.id == index)
+                    tmp = order;
+            }
             //db_man.OrderList.Where( (OrderFormViewId, index) => OrderFormViewId == index );
 
             //          ¯\_(ツ)_/¯
             
-            if(tmp.obj_list.Count == 0) 
-            foreach (var obj_inc in db_man.ObjectList)
-            {
-                if(obj_inc.OrderFormViewId == index)
-                    tmp.obj_list.Add(obj_inc);
-            }
+            //if(tmp.obj_list.Count == 0) 
+            //foreach (var obj_inc in db_man.ObjectList)
+            //{
+             //   if(obj_inc.OrderFormViewId == index)
+            //        tmp.obj_list.Add(obj_inc);
+            //}
 
             ViewBag.edit_type = 1;
-            return View("Order",tmp );
+            return View("Order", tmp );
         }
 
         [Authorize]
@@ -253,6 +258,15 @@ namespace BankOrderSys.Controllers
             week_days_l.Add("Пятница");
             week_days_l.Add("Суббота");
             week_days_l.Add("Воскресенье");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db_man.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }
