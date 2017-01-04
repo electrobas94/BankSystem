@@ -1,0 +1,63 @@
+﻿
+<form>
+<div class="input-group col-md-12">
+    <div style="display:inline-block;width:15%;">
+        <label>Фильтр по дате</label>
+        <select class="form-control" 
+                onchange="if (this.selectedIndex == 1) {
+                            $('#period_s').show('slow');
+                            $('#period_e').show('slow')
+                        }
+                        else {
+                            $('#period_s').hide('slow');
+                            $('#period_e').hide('slow');
+                        }">
+            <option value="0">Не выбран</option>
+            <option value="1">За период</option>
+            <option value="2">Текущая неделя</option>
+            <option value="3">Текущий месяц</option>
+        </select>
+    </div>
+
+    <div style="display:inline-block;width:15%;" id="period_s">
+        <label>Период с</label>
+        <input class="form-control" type="date" />
+    </div>
+
+    <div style="display:inline-block;width:15%;" id="period_e">
+        <label>До</label>
+        <input class="form-control" type="date" />
+    </div>
+
+    <div style="display:inline-block;width:20%;">
+        <label>по типу</label>
+        <select class="form-control">
+            <option>Не выбран</option>
+            @foreach (var a in ViewBag.type_order_l)
+            {
+                <option>@a</option>
+            }
+        </select>
+    </div>
+
+    <div style="display:inline-block;width:20%;">
+        <label>По статусу</label>
+        <select class="form-control">
+            <option>Не выбран</option>  
+            <option>В обработке</option>
+            <option>Подписан</option>
+        </select>
+
+    </div>
+
+    <div class="btn-group" style="display:inline-block;vertical-align:bottom;width:15%;">
+        <button type="button" class="btn btn-default">Фильтр</button>
+        <button type="button"
+                class="btn btn-default"
+                onclick="window.location.href = '/Home/Index'">
+            Сброс
+        </button>
+    </div>
+
+</div>
+    </form>
