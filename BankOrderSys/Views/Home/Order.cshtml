@@ -189,7 +189,7 @@
                 }
                 else
                 {
-                    <input type="hidden" name="date" value="@DateTime.Today.Date" />
+                    <input type="hidden" name="date" value="@DateTime.Today.Date.ToString().Split(' ')[0]" />
                     <input type="hidden" name="user_name" value="@User.Identity.GetUserName()" />
                     <input type="hidden" name="status" value="В обработке" />
                 }
