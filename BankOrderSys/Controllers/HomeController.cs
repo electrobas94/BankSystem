@@ -144,13 +144,15 @@ namespace BankOrderSys.Controllers
         {
             //OrderFormView mod_order =  db_man.OrderList.Find(order.id);
             //if (mod_order != null)
+            try
             {
                 db_man.Entry(order).State = EntityState.Modified;
                 db_man.SaveChanges();
                 //db_man.Entry(order).State = EntityState.Added;
                 //db_man.OrderList.Add(order);
-               // db_man.SaveChanges();
+                // db_man.SaveChanges();
             }
+            catch { }
 
             return RedirectToAction("Index");
         }
