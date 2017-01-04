@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using BankOrderSys.Models;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
+using System.Data.Entity.Core.Objects;
 
 namespace BankOrderSys.Controllers
 {
@@ -99,7 +100,8 @@ namespace BankOrderSys.Controllers
         {
             ViewBag.edit_type = 0;
 
-            db_man.Entry(order).State = EntityState.Added;
+            //db_man.Entry(order).State = EntityState.Added;
+            db_man.OrderList.Add(order);
             try
             {
                 db_man.SaveChanges();
@@ -120,6 +122,18 @@ namespace BankOrderSys.Controllers
         public ActionResult EditOrder(int index)
         {
             OrderFormView tmp = db_man.OrderList.Find(index);
+
+            //db_man.OrderList.Where( (OrderFormViewId, index) => OrderFormViewId == index );
+
+            //          ¯\_(ツ)_/¯
+            
+            if(tmp.obj_list.Count == 0) 
+            foreach (var obj_inc in db_man.ObjectList)
+            {
+                if(obj_inc.OrderFormViewId == index)
+                    tmp.obj_list.Add(obj_inc);
+            }
+
             ViewBag.edit_type = 1;
             return View("Order",tmp );
         }
@@ -128,12 +142,15 @@ namespace BankOrderSys.Controllers
         [HttpPost]
         public ActionResult EditOrder(OrderFormView order)
         {
-            db_man.Entry(order).State = EntityState.Modified;
-            try
+            //OrderFormView mod_order =  db_man.OrderList.Find(order.id);
+            //if (mod_order != null)
             {
+                db_man.Entry(order).State = EntityState.Modified;
                 db_man.SaveChanges();
+                //db_man.Entry(order).State = EntityState.Added;
+                //db_man.OrderList.Add(order);
+               // db_man.SaveChanges();
             }
-            catch { }
 
             return RedirectToAction("Index");
         }
