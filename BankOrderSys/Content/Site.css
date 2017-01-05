@@ -22,3 +22,10 @@ select,
 textarea {
     /*max-width: 280px;*/
 }
+
+.item-edit{
+    display: none;
+}
+.list-group-item:hover .item-edit{
+    display: block;
+}

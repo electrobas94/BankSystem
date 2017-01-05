@@ -12,20 +12,26 @@ namespace BankOrderSys.Controllers
 {
     public class HomeController : Controller
     {
-        List<string> period_list = new List<string>();
-        List<string> week_days_l = new List<string>();
+        List<string> period_list    = new List<string>();
+        List<string> week_days_l    = new List<string>();
         List<string> type_servece_l = new List<string>();
-        List<string> type_money_l = new List<string>();
-        List<string> type_adress_l = new List<string>();
-        List<string> type_city_l = new List<string>();
+        List<string> type_money_l   = new List<string>();
+        List<string> type_adress_l  = new List<string>();
+        List<string> type_city_l    = new List<string>();
         List<string> type_get_money_l = new List<string>();
-        List<string> type_order_l = new List<string>();
-        List<string> bank_dep_l = new List<string>();
+        List<string> type_order_l   = new List<string>();
+        List<string> bank_dep_l     = new List<string>();
 
         ManagerDB db_man = new ManagerDB();
 
         int? cur_sort = 1;
         IEnumerable<OrderFormView> sort_list;
+
+        [Authorize]
+        public ActionResult Lists()
+        {
+            return View();
+        }
 
         [Authorize]
         [HttpGet]

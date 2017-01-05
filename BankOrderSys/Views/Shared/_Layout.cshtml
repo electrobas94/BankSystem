@@ -6,6 +6,20 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <style>
+    .item-edit{
+        display: none;
+    }
+    .list-group-item:hover .item-edit{
+        display: block;
+    }
+    .item-info{
+        display: block;
+    }
+    .list-group-item:hover .item-info{
+        display: none;
+    }
+    </style>
 
 </head>
 <body>
@@ -18,16 +32,23 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("Система формирования заявок на инкасацию", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                @{
-                    if (ViewBag.admin != null && ViewBag.admin)
-                    {
-                        <button class="btn btn-default" onclick="window.location.href = '/Home/Index?admin=0';">Выкл. Админку</button>
+                <div class="btn-group">
+                    @{
+                        if (ViewBag.admin != null && ViewBag.admin)
+                        {
+                            <button class="btn btn-default"
+                                    type="button" 
+                                    onclick="window.location.href = '/Home/Index?admin=0';">Выкл. Админку</button>
+                            <button class="btn btn-default" 
+                                    type="button"
+                                    onclick="window.location.href = '/Home/Lists';">Справочники</button>
+                        }
+                        else if (ViewBag.admin != null)
+                        {
+                            <button class="btn btn-default" onclick="window.location.href = '/Home/Index?admin=1';">Вкл. Админку</button>
+                        }
                     }
-                    else if(ViewBag.admin != null)
-                    {
-                        <button class="btn btn-default" onclick="window.location.href = '/Home/Index?admin=1';">Вкл. Админку</button>
-                    }
-                }
+                </div>
                 
             </div>
             <div class="navbar-collapse collapse">
