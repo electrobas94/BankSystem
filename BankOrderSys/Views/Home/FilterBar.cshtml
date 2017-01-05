@@ -1,9 +1,41 @@
 ﻿
-<form>
+@helper isSelectedDate(int item)
+{
+        string str = "";
+        if (ViewBag.date == item)
+        {
+            str = "selected";
+        }
+        @str
+}
+
+@helper isSelectedType(string item)
+{
+    string str = "";
+    if (ViewBag.type == item)
+    {
+        str = "selected";
+    }
+        @str
+}
+
+@helper isSelectedStatus(string item)
+{
+    string str = "";
+    if (ViewBag.status == item)
+    {
+        str = "selected";
+    }
+        @str
+}
+
+<form method="get">
 <div class="input-group col-md-12">
     <div style="display:inline-block;width:15%;">
         <label>Фильтр по дате</label>
-        <select class="form-control" 
+        <select class="form-control"
+                id="date_f" 
+                name="date"
                 onchange="if (this.selectedIndex == 1) {
                             $('#period_s').show('slow');
                             $('#period_e').show('slow')
@@ -13,51 +45,55 @@
                             $('#period_e').hide('slow');
                         }">
             <option value="0">Не выбран</option>
-            <option value="1">За период</option>
-            <option value="2">Текущая неделя</option>
-            <option value="3">Текущий месяц</option>
+            <option value="1" @isSelectedDate(1)>За период</option>
+            <option value="2" @isSelectedDate(2)>Текущая неделя</option>
+            <option value="3" @isSelectedDate(3)>Текущий месяц</option>
         </select>
     </div>
-
     <div style="display:inline-block;width:15%;" id="period_s">
         <label>Период с</label>
-        <input class="form-control" type="date" />
+        <input class="form-control" type="date"name="date_start" value="@ViewBag.date_start" />
     </div>
 
     <div style="display:inline-block;width:15%;" id="period_e">
         <label>До</label>
-        <input class="form-control" type="date" />
+        <input class="form-control" type="date" name="date_end" value="@ViewBag.date_end" />
     </div>
 
     <div style="display:inline-block;width:20%;">
         <label>по типу</label>
-        <select class="form-control">
-            <option>Не выбран</option>
+        <select class="form-control" name="type">
+            <option value="">Не выбран</option>
             @foreach (var a in ViewBag.type_order_l)
             {
-                <option>@a</option>
+                <option @isSelectedType(@a)>@a</option>
             }
         </select>
     </div>
 
     <div style="display:inline-block;width:20%;">
         <label>По статусу</label>
-        <select class="form-control">
-            <option>Не выбран</option>  
-            <option>В обработке</option>
-            <option>Подписан</option>
+        <select class="form-control" name="status">
+            <option value="">Не выбран</option>  
+            <option @isSelectedStatus("В обработке")>В обработке</option>
+            <option @isSelectedStatus("Подписан")>Подписан</option>
         </select>
 
     </div>
 
     <div class="btn-group" style="display:inline-block;vertical-align:bottom;width:15%;">
-        <button type="button" class="btn btn-default">Фильтр</button>
+        <button type="submit" 
+                class="btn btn-default">
+            Фильтр
+        </button>
         <button type="button"
                 class="btn btn-default"
                 onclick="window.location.href = '/Home/Index'">
             Сброс
         </button>
     </div>
+
+    <input type="hidden" value="@ViewBag.sort"/>
 
 </div>
     </form>

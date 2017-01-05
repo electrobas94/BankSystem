@@ -53,29 +53,76 @@ namespace BankOrderSys.Controllers
 
         [Authorize]
         [HttpGet]
-        public ActionResult Index(int? sort, int? admin)
+        public ActionResult Index(int? sort, int? admin, string type, string status, int? date, string date_start, string date_end)
         {
             if (admin == 1)
                 ViewBag.admin = true;
             else if(admin == 0)
                 ViewBag.admin = false;
 
+            ViewBag.sort        = sort;
+            ViewBag.type        = type;
+            ViewBag.status      = status;
+            ViewBag.date        = date;
+            ViewBag.date_start  = date_start;
+            ViewBag.date_end = date_end;
+
+            var order_list = db_man.OrderList.AsQueryable();
+
+            if(date != null)
+            {
+                switch(date)
+                {
+                    case 0:break;//no date sort
+                    case 1:
+                        if (date_start == "" || date_start == null)
+                            break;
+                        if (date_end == "" || date_end == null)
+                            break;
+
+                        date_start.Split('.');
+                        DateTime d_s = DateTime.ParseExact(date_start, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+                        DateTime d_e = DateTime.ParseExact(date_end, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+
+                        order_list = order_list.Where(c => ( d_s <= Convert.ToDateTime(c.date) && d_e >= Convert.ToDateTime(c.date) ));
+
+                        break;//period
+                    case 2:
+                        order_list = order_list.Where(c => Convert.ToDateTime(c.date).DayOfWeek == DateTime.Today.DayOfWeek);
+                        break;//week
+                    case 3:
+                        order_list = order_list.Where(c => Convert.ToDateTime( c.date ).Month == DateTime.Today.Month );
+                        break;//mounth
+                }
+            }
+
+            if(status != null && status != "")
+            {
+                order_list = order_list.Where(c => c.status == status);
+            }
+
+            if (type != null && type != "")
+            {
+                order_list = order_list.Where(c => c.type == type);
+            }
+
+            /*
             if (sort != null)
             {
                 if (cur_sort == sort)
-                    sort_list = sort_list.Reverse();
+                    sort_list = sort_list.AsEnumerable().Reverse();
                 else
                 {
                     switch (sort)
                     {
                         case 0:
-                            sort_list = db_man.OrderList.OrderBy(obj => obj.date);
+                            sort_list = db_man.OrderList.AsEnumerable().OrderBy(obj => obj.date);
                             break;
                         case 1:
-                            sort_list = db_man.OrderList.OrderBy(obj => obj.number);
+                            sort_list = db_man.OrderList.AsEnumerable().OrderBy(obj => obj.number);
                             break;
                         case 2:
-                            sort_list = db_man.OrderList.OrderBy(obj => obj.status);
+                            sort_list = db_man.OrderList.AsEnumerable().OrderBy(obj => obj.status);
                             break;
                     }
 
@@ -84,8 +131,9 @@ namespace BankOrderSys.Controllers
             }
             else
                 sort_list = db_man.OrderList;
+                */
 
-            return View(sort_list);
+            return View( order_list.AsEnumerable() );
         }
 
         [Authorize]
