@@ -242,8 +242,9 @@ namespace BankOrderSys.Controllers
         [HttpPost]
         public ActionResult DelOrder(OrderFormView order)
         {
-            
-            db_man.Entry(order).State = EntityState.Deleted;
+
+            order.status = "Удаленная";
+            db_man.Entry(order).State = EntityState.Modified;
             db_man.SaveChanges();
 
             return RedirectToAction("Index");
