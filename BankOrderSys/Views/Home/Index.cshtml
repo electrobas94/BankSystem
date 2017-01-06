@@ -15,9 +15,24 @@
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th onclick="window.location.href = '/Home/Index?sort=1';" style="cursor:pointer">Номер</th>
-                    <th onclick="window.location.href = '/Home/Index?sort=0';" style="cursor:pointer">Дата</th>
-                    <th onclick="window.location.href = '/Home/Index?sort=2';" style="cursor:pointer">Статус</th>
+                    @{ 
+                        int[] s = new int[3];
+                        int j;
+                        for (j = 0; j < 3; j++)
+                        {
+                            s[j] = j + 1;
+                            if (ViewBag.sort != null)
+                            {
+                                if (s[j] == Math.Abs(ViewBag.sort))
+                                {
+                                    s[j] = ViewBag.sort * (-1);
+                                }
+                            }
+                        }
+                    }
+                    <th onclick="window.location.href = '/Home/Index?sort=@s[1]'" style="cursor:pointer">Номер</th>
+                    <th onclick="window.location.href = '/Home/Index?sort=@s[0]';" style="cursor:pointer">Дата</th>
+                    <th onclick="window.location.href = '/Home/Index?sort=@s[2]';" style="cursor:pointer">Статус</th>
                     <th>Тип заявки</th>
                     <th>Подразделение банка</th>
                     <th>Название организации</th>

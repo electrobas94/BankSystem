@@ -148,34 +148,28 @@ namespace BankOrderSys.Controllers
                 order_list = order_list.Where(c => c.type == type);
             }
 
-            /*
-            if (sort != null)
+            if(sort != null)
             {
-                if (cur_sort == sort)
-                    sort_list = sort_list.AsEnumerable().Reverse();
-                else
+                switch (Math.Abs((int)sort))
                 {
-                    switch (sort)
-                    {
-                        case 0:
-                            sort_list = db_man.OrderList.AsEnumerable().OrderBy(obj => obj.date);
-                            break;
-                        case 1:
-                            sort_list = db_man.OrderList.AsEnumerable().OrderBy(obj => obj.number);
-                            break;
-                        case 2:
-                            sort_list = db_man.OrderList.AsEnumerable().OrderBy(obj => obj.status);
-                            break;
-                    }
-
-                    cur_sort = sort;
+                    case 1:
+                        order_list = order_list.OrderBy(obj => obj.date);//db_man.OrderList.AsEnumerable().OrderBy(obj => obj.date);
+                        break;
+                    case 2:
+                        order_list = order_list.OrderBy(obj => obj.number);
+                        break;
+                    case 3:
+                        order_list = order_list.OrderBy(obj => obj.status);
+                        break;
                 }
-            }
-            else
-                sort_list = db_man.OrderList;
-                */
 
-            return View( order_list.AsEnumerable() );
+            }
+
+            var model = order_list.AsEnumerable();
+            if ( sort != null && sort < 0)
+                model = model.Reverse();
+
+            return View(model);
         }
 
         [Authorize]
