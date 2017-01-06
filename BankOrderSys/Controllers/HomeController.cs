@@ -78,11 +78,7 @@ namespace BankOrderSys.Controllers
             tmp.status = "Подписан";
 
             db_man.Entry(tmp).State = EntityState.Modified;
-            try
-            {
-                db_man.SaveChanges();
-            }
-            catch { }
+            db_man.SaveChanges();
 
             return RedirectToAction("Index");//"Index"
         }
@@ -186,11 +182,7 @@ namespace BankOrderSys.Controllers
 
             //db_man.Entry(order).State = EntityState.Added;
             db_man.OrderList.Add(order);
-            try
-            {
-                db_man.SaveChanges();
-            }
-            catch { }
+            db_man.SaveChanges();
 
             //string tmp = "";
             //foreach (DbEntityValidationResult  a in db_man.GetValidationErrors())
@@ -239,17 +231,9 @@ namespace BankOrderSys.Controllers
         [HttpPost]
         public ActionResult EditOrder(OrderFormView order)
         {
-            //OrderFormView mod_order =  db_man.OrderList.Find(order.id);
-            //if (mod_order != null)
-            try
-            {
-                db_man.Entry(order).State = EntityState.Modified;
-                db_man.SaveChanges();
-                //db_man.Entry(order).State = EntityState.Added;
-                //db_man.OrderList.Add(order);
-                // db_man.SaveChanges();
-            }
-            catch { }
+
+            db_man.Entry(order).State = EntityState.Modified;
+            db_man.SaveChanges();
 
             return RedirectToAction("Index");
         }
@@ -259,12 +243,9 @@ namespace BankOrderSys.Controllers
         public ActionResult DelOrder(OrderFormView order)
         {
             
-            try
-            {
-                db_man.Entry(order).State = EntityState.Deleted;
-                db_man.SaveChanges();
-            }
-            catch { }
+            db_man.Entry(order).State = EntityState.Deleted;
+            db_man.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
