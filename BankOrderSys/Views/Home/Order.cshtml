@@ -3,22 +3,22 @@
 @using Microsoft.AspNet.Identity
 
 @{
-    ViewBag.Title = "AddOrder";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<br />
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
 
+@helper inputHidden(string name, string value) {
+    <input type="hidden" name="@name" value="@value" />
+}
+
+<br />
+@using (Html.BeginForm()){
+    @Html.AntiForgeryToken()
     <div class="panel panel-default">
         <div class="panel-heading" style="overflow-y:auto; padding-left:0px; margin-left:0px">
             <div class="col-md-12">
                 <div class="col-md-5" style="padding-left:0px; margin-left:0px; text-align:center">
                     <h4>
-                        <b>
-                            Форма создания новой заявки
-                        </b>
+                        <b>Форма создания новой заявки</b>
                     </h4>
                 </div>
                 <div class="col-md-7">
@@ -27,14 +27,12 @@
                             string title = "Отправить заявку";
                             string adress = "AddOrder";
 
-                            if (ViewBag.edit_type == 1)
-                            {
+                            if (ViewBag.edit_type == 1){
                                 title = "Сохранить изменения";
                                 adress = "EditOrder";
                             }
 
-                            if ( Model.status == "В обработке" || Model.status == null )
-                            {
+                            if (Model.status == "В обработке" || Model.status == null){
                                 <button type="submit"
                                         onclick="setRequired(true);"
                                         class="btn btn-default btn-lg"
@@ -43,25 +41,21 @@
                                     @title
                                 </button>
 
-                                if (ViewBag.edit_type == 1)
-                                {
+                                if (ViewBag.edit_type == 1){
                                     <button type="submit"
-                                           class="btn btn-default btn-lg"
-                                           formmethod="post"
-                                           formaction="/Home/DelOrder">
+                                            class="btn btn-default btn-lg"
+                                            formmethod="post"
+                                            formaction="/Home/DelOrder">
                                         Удалить заявку
                                     </button>
                                 }
-
                             }
-                                <button class="btn btn-default btn-lg"
-                                        type="button"
-                                        onclick="window.location.href = '/Home/Index';">
-                                    Назад на главную
-                                </button>
-
+                            <button class="btn btn-default btn-lg"
+                                    type="button"
+                                    onclick="window.location.href = '/Home/Index';">
+                                Назад на главную
+                            </button>
                         }
-
                     </div>
                 </div>
             </div>
@@ -70,19 +64,17 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group col-md-6">
                 @Html.LabelFor(model => model.type, htmlAttributes: new { @class = "control-label" })
-                <select class="form-control req" 
-                        name="type" 
-                        value="@Model.type"  
+                <select class="form-control req"
+                        name="type"
+                        value="@Model.type"
                         title="Тип заявки, выбираемый при формировании ЭД">
                     <option></option>
-                    @foreach (var a in ViewBag.ref_book)
-                    {
-                        if (a.type == 1)
-                        {
+                    @foreach (var a in ViewBag.ref_book){
+                        if (a.type == 1){
                             string str = "";
-                            if (a.title == Model.type)
-                            { str = "selected"; }
-
+                            if (a.title == Model.type){
+                                str = "selected";
+                            }
                             <option @str>@a.title</option>
                         }
                     }
@@ -92,13 +84,12 @@
 
             <div class="form-group col-md-6">
                 @Html.LabelFor(model => model.bank_dep, htmlAttributes: new { @class = "control-label" })
-                <select class="form-control req" 
-                        name="bank_dep"  
+                <select class="form-control req"
+                        name="bank_dep"
                         title="Подразделения банка, где обслуживается клиент">
                     <option></option>
                     @foreach (var a in ViewBag.bank_dep_l)
                     {
-
                         string str = "";
                         if (a == Model.bank_dep)
                         { str = "selected"; }
@@ -158,35 +149,33 @@
 
                     <div class="panel panel-default">
                         <div class="panel-heading" style="overflow-y:auto; padding-left:0px; margin-left:0px">
-                                <div class="col-md-12">
-                                    <div class="col-md-7" style="padding-left:0px; margin-left:0px">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
-                                                + Обьекты инкасации
-                                            </a>
-                                        </h4>
-                                    </div>
-                                        <div class="col-md-5">
-                                            <div class="btn-group">
-                                                <button type="submit" 
-                                                        value=":vzryb"
-                                                        onclick="setRequired(false);" 
-                                                        formmethod="post" 
-                                                        formaction="/Home/AddObj?edit_type=@ViewBag.edit_type" 
-                                                        class="btn btn-default">
-                                                    Добавить объект
-                                                </button>
-                                                <button type="submit" 
-                                                        value=":vzryb" 
-                                                        onclick="setRequired(false);"
-                                                        formmethod="post" 
-                                                        formaction="/Home/DelObj?edit_type=@ViewBag.edit_type" 
-                                                        class="btn btn-default">
-                                                    Удалить последний объект
-                                                </button>
-</div>
-                                        </div>
+                            <div class="col-md-12">
+                                <div class="col-md-7" style="padding-left:0px; margin-left:0px">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                                            + Обьекты инкасации
+                                        </a>
+                                    </h4>
                                 </div>
+                                <div class="col-md-5">
+                                    <div class="btn-group">
+                                        <button type="submit"
+                                                onclick="setRequired(false);"
+                                                formmethod="post"
+                                                formaction="/Home/AddObj?edit_type=@ViewBag.edit_type"
+                                                class="btn btn-default">
+                                            Добавить объект
+                                        </button>
+                                        <button type="submit"
+                                                onclick="setRequired(false);"
+                                                formmethod="post"
+                                                formaction="/Home/DelObj?edit_type=@ViewBag.edit_type"
+                                                class="btn btn-default">
+                                            Удалить последний объект
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div id="collapse4" class="panel-collapse collapse in">
                             <div class="panel-body">
@@ -197,29 +186,18 @@
                 </div>
             </div>
 
-            @{
-                if (ViewBag.edit_type == 1)
-                {
-                    <input type="hidden" name="id" value="@Model.id" />
-                    <input type="hidden" name="date" value="@Model.date" />
-                    <input type="hidden" name="user_name" value="@Model.user_name" />
-                    <input type="hidden" name="status" value="@Model.status" />
-                }
-                else
-                {
-                    <input type="hidden" name="date" value="@DateTime.Today.Date.ToString().Split(' ')[0]" />
-                    <input type="hidden" name="user_name" value="@User.Identity.GetUserName()" />
-                    <input type="hidden" name="status" value="В обработке" />
-                }
+            @if (ViewBag.edit_type == 1){
+                @inputHidden("id", @Model.id.ToString());
+                @inputHidden("date", @Model.date);
+                @inputHidden("user_name", @Model.user_name);
+                @inputHidden("status", @Model.status);
             }
-
-
+            else{
+                @inputHidden("date", @DateTime.Now.Date.ToString().Split(' ')[0]);
+                @inputHidden("user_name", @User.Identity.GetUserName());
+                @inputHidden("status", "В обработке");
+            }
         </div>
     </div>
-
-
 }
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+<!--form end-->

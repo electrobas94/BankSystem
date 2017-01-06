@@ -29,3 +29,49 @@ textarea {
 .list-group-item:hover .item-edit{
     display: block;
 }
+
+    .item-edit{
+        display: none;
+    }
+    .list-group-item:hover .item-edit{
+        display: block;
+    }
+    .item-info{
+        display: block;
+    }
+    .list-group-item:hover .item-info{
+        display: none;
+    }
+    .table{
+        display:table;
+        margin:0px;
+        padding:0px;
+        margin-top:5px;
+        margin-bottom:5px;
+    }
+    .tr{
+        cursor:pointer;
+        display:table-row;
+    }
+    .td{
+        padding:5px;
+        vertical-align:middle;
+        border-top:1px solid #d5d5d5;
+        display:table-cell;
+    }
+    .table .tr:nth-child(odd) {
+        background-color: #ebebeb;
+    }
+    .tr:hover{
+        background-color: #d5d5d5;
+    }
+    .table .tr:nth-child(odd):hover{
+        background-color: #d5d5d5;
+    }
+    .th{
+        border-top:0px hidden #d5d5d5;
+        border-bottom:1px solid #d5d5d5;
+        background-color: #ffffff;
+        cursor:default;
+        font-weight:bold;
+    }

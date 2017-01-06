@@ -4,40 +4,38 @@
 
 @helper itemList(OrderFormView elem)
 {
-string fmt = "00000";
-string style = "";
+    string fmt = "00000";
+    string style = "";
 
-if (elem.status == "Подписан")
-{
-    style = "color:#3a993a;";
-}
-else if (elem.status == "Удаленная")
-{
-    style = "color:#ff4a4a;";
-}
-        <div class="tr" 
-             style="width:100%;" 
-             onclick="window.location.href = '/Home/EditOrder?index=@elem.id';">
-            <div class="td" style="width:6%">2-@elem.id.ToString(fmt)</div>
-            <div class="td" style="width:10%">@elem.date</div>
-            <div class="td" style="width:9%;@style">@elem.status</div>
-            <div class="td" style="width:25%">@elem.type</div>
-            <div class="td" style="width:14%">@elem.bank_dep</div>
-            <div class="td" style="width:18%">@elem.title_org</div>
-            <div class="td" style="width:18%">
-                @elem.title_bank
-                @if (ViewBag.admin)
-                {
-                    <span>
-                        <button onclick="window.location.href = '/Home/Sign?id=@elem.id';event.stopPropagation();"
-                                class="btn btn-default pull-right"
-                                type="button">
-                            Подписать
-                        </button>
-                    </span>
-                }
-            </div>
+    if (elem.status == "Подписан"){
+        style = "color:#3a993a;";
+    }
+    else if (elem.status == "Удаленная"){
+        style = "color:#ff4a4a;";
+    }
+    <div class="tr"
+         style="width:100%;"
+         onclick="window.location.href = '/Home/EditOrder?index=@elem.id';">
+        <div class="td" style="width:6%">2-@elem.id.ToString(fmt)</div>
+        <div class="td" style="width:10%">@elem.date</div>
+        <div class="td" style="width:9%;@style">@elem.status</div>
+        <div class="td" style="width:25%">@elem.type</div>
+        <div class="td" style="width:14%">@elem.bank_dep</div>
+        <div class="td" style="width:18%">@elem.title_org</div>
+        <div class="td" style="width:18%">
+            @elem.title_bank
+            @if (ViewBag.admin)
+            {
+                <span>
+                    <button onclick="window.location.href = '/Home/Sign?id=@elem.id';event.stopPropagation();"
+                            class="btn btn-default pull-right"
+                            type="button">
+                        Подписать
+                    </button>
+                </span>
+            }
         </div>
+    </div>
 }
 
 <div class="row">
@@ -69,20 +67,19 @@ else if (elem.status == "Удаленная")
         }
         <div class="tr" style="width:100%;">
             <div class="td th" onclick="window.location.href = '/Home/Index?sort=@s[1]'" style="cursor:pointer">Номер</div>
-            <div class="td th" onclick="window.location.href = '/Home/Index?sort=@s[0]';" style="cursor:pointer">Дата</div>
-            <div class="td th" onclick="window.location.href = '/Home/Index?sort=@s[2]';" style="cursor:pointer">Статус</div>
+            <div class="td th" onclick="window.location.href = '/Home/Index?sort=@s[0]'" style="cursor:pointer">Дата</div>
+            <div class="td th" onclick="window.location.href = '/Home/Index?sort=@s[2]'" style="cursor:pointer">Статус</div>
             <div class="td th">Тип заявки</div>
             <div class="td th">Подразделение банка</div>
             <div class="td th">Название организации</div>
             <div class="td th">Название банка</div>
         </div>
-                @foreach (var a in Model){
-                    @itemList(a)
-                }
-        @{
-            if (Model == null || Model.Count() == 0){
-                <p>К сожалению у вас нет заявок</p>
-            }
+        @foreach (var a in Model){
+            @itemList(a)
+        }
+
+        @if (Model == null || Model.Count() == 0){
+            <p>К сожалению у вас нет заявок</p>
         }
     </div>
 </div>

@@ -4,8 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@helper drawList( string title, int type)
-{
+@helper drawList( string title, int type){
     <div class="col-md-6">
         <form>
             <h3>@title <button class="btn btn-default btn-lg" 
@@ -16,10 +15,8 @@
                         </button>
             </h3>
             <div class="list-group">
-                @foreach (var a in Model)
-                {
-                    if (a.type == type)
-                    {
+                @foreach (var a in Model){
+                    if (a.type == type){
                         <a href="#" class="list-group-item">
                             <div class="item-info">
                                 <big>@a.title</big>
@@ -49,7 +46,6 @@
                         </a>
                     }
                 }
-
             </div>
         </form>
     </div>

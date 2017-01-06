@@ -18,7 +18,6 @@ namespace BankOrderSys.Models
         public string saturd_time_end { get; set; }
         public string sund_time_start { get; set; }
         public string sund_time_end { get; set; }
-
         public string type_get_money { get; set; }
         public string period { get; set; }
         public string week_day { get; set; }

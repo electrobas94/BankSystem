@@ -1,7 +1,7 @@
 ﻿@using BankOrderSys.Models
 @model BankOrderSys.Models.OrderFormView
 
-<!-- 19 колонок по горизонтали не влезали, поэтому таблица растет вправо со скролом. -->
+<!-- 19 колонок по горизонтали не влезали, поэтому список объектов растет вправо со скролом. -->
 
 <div id="wrapper2" class="col-md-12 double-scroll" style="overflow-x:scroll">
     <form id="obj_list_incas" method="post" action="/Home/AddObj">
@@ -11,203 +11,167 @@
                 <tr>
                     <th>Описание</th>
                     @{
-                    int i = 0;
-                    }
-
-                    @foreach (var a in Model.obj_list)
-                    {
-                    <th>Объект №@(++i)</th>
+                        int i = 0;
+                        for (i = 0; i < Model.obj_list.Count; i++) {
+                            <th>Объект №@(i+1)</th>
+                        }
                     }
                     <th></th>
                 </tr>
             </thead>
             <tbody>
+
                 <tr>
                     <td>Желательное время сдачи наличных</td>
-                    @{
-                    i = 0;
-                    }
-                    @for ( i = 0; i < Model.obj_list.Count; i++)
-                    {
-                    <td>
-                        <input type="time" 
-                               class="form-control req" 
-                               name="obj_list[@i].time" 
-                               value="@Model.obj_list.ElementAt(i).time" 
-                               title="ЧЧ:ММ" />
-                    </td>
+                    @for ( i = 0; i < Model.obj_list.Count; i++){
+                        <td>
+                            <input type="time" 
+                                   class="form-control req" 
+                                   name="obj_list[@i].time" 
+                                   value="@Model.obj_list.ElementAt(i).time" 
+                                   title="ЧЧ:ММ" />
+                        </td>
                     }
                 </tr>
+
                 <tr>
                     <td>Способ сдачи денежной наличности</td>
-                    @{
-                    i = 0;
-                    }
-                    @for (i = 0; i < Model.obj_list.Count; i++)
-                    {
-                    <td>
-                        <select class="form-control req" 
-                                name="obj_list[@i].type_get_money" 
-                                title="Предпочитаемый способ сдачи денежной наличности для инкассации.">
-                            <option></option>
-                            @foreach (var a in ViewBag.ref_book)
-                            {
-                                if (a.type == 2)
-                                {
-                                    string str = "";
-                                    if (a.title == Model.obj_list.ElementAt(i).type_get_money)
-                                    { str = "selected"; }
-
-                                    <option @str>@a.title</option>
+                    @for (i = 0; i < Model.obj_list.Count; i++){
+                        <td>
+                            <select class="form-control req" 
+                                    name="obj_list[@i].type_get_money" 
+                                    title="Предпочитаемый способ сдачи денежной наличности для инкассации.">
+                                <option></option>
+                                @foreach (var a in ViewBag.ref_book){
+                                    if (a.type == 2){
+                                        string str = "";
+                                        if (a.title == Model.obj_list.ElementAt(i).type_get_money){
+                                            str = "selected";
+                                        }
+                                        <option @str>@a.title</option>
+                                    }
                                 }
-                            }
-                        </select>
-                    </td>
+                            </select>
+                        </td>
                     }
                 </tr>
+
                 <tr>
                     <td>Периодичность оказания инкассаторских услуг</td>
-                    @{
-                    i = 0;
-                    }
-                    @for (i = 0; i < Model.obj_list.Count; i++)
-                    {
-                    <td>
-                        <select class="form-control req" 
-                                name="obj_list[@i].period" 
-                                title="Ежедневно/Рабочие дни/Через день/День недели/По заявке/По звонку">
-                            <option></option>
-                            @foreach (var a in ViewBag.ref_book)
-                            {
-                                if (a.type == 3)
-                                {
-                                    string str = "";
-                                    if (a.title == Model.obj_list.ElementAt(i).period)
-                                    { str = "selected"; }
-
-                                    <option @str>@a.title</option>
+                    @for (i = 0; i < Model.obj_list.Count; i++){
+                        <td>
+                            <select class="form-control req" 
+                                    name="obj_list[@i].period" 
+                                    title="Ежедневно/Рабочие дни/Через день/День недели/По заявке/По звонку">
+                                <option></option>
+                                @foreach (var a in ViewBag.ref_book){
+                                    if (a.type == 3){
+                                        string str = "";
+                                        if (a.title == Model.obj_list.ElementAt(i).period){
+                                            str = "selected";
+                                        }
+                                        <option @str>@a.title</option>
+                                    }
                                 }
-                            }
-                        </select>
-                    </td>
+                            </select>
+                        </td>
                     }
                 </tr>
+
                 <tr>
                     <td>День недели</td>
-                    @{
-                    i = 0;
-                    }
-                    @for (i = 0; i < Model.obj_list.Count; i++)
-                    {
-                    <td>
-                        <select class="form-control" 
-                                name="obj_list[@i].week_day" 
-                                title="День недели, выбираемый для оказания услуг по объекту инкассации">
-                            <option></option>
-                            @foreach (var a in ViewBag.week_days_l)
-                            {
-                                string str = "";
-                                if (a == Model.obj_list.ElementAt(i).week_day)
-                                { str = "selected"; }
-
-                                <option @str>@a</option>
-                            }
-                        </select>
-                    </td>
+                    @for (i = 0; i < Model.obj_list.Count; i++){
+                        <td>
+                            <select class="form-control" 
+                                    name="obj_list[@i].week_day" 
+                                    title="День недели, выбираемый для оказания услуг по объекту инкассации">
+                                <option></option>
+                                @foreach (var a in ViewBag.week_days_l){
+                                    string str = "";
+                                    if (a == Model.obj_list.ElementAt(i).week_day)
+                                    {
+                                        str = "selected";
+                                    }
+                                    <option @str>@a</option>
+                                }
+                            </select>
+                        </td>
                     }
                 </tr>
+
                 <tr>
                     <td>Предполагаемый объем денежной наличности</td>
-                    @{
-                    i = 0;
-                    }
-                    @for (i = 0; i < Model.obj_list.Count; i++)
-                    {
-                    <td>
-                        <input class="form-control req" 
-                               type="number" 
-                               name="obj_list[@i].count_money" 
-                               min="1" step="0.01"  
-                               value="@Model.obj_list.ElementAt(i).count_money" 
-                               title="Сумма предназначенная клиентом к инкассации. М.б. как в рублях так и в ин. валюте" />
-                    </td>
+                    @for (i = 0; i < Model.obj_list.Count; i++){
+                        <td>
+                            <input class="form-control req" 
+                                   type="number" 
+                                   name="obj_list[@i].count_money" 
+                                   min="1" step="0.01"  
+                                   value="@Model.obj_list.ElementAt(i).count_money" 
+                                   title="Сумма предназначенная клиентом к инкассации. М.б. как в рублях так и в ин. валюте" />
+                        </td>
                     }
                 </tr>
+
                 <tr>
                     <td>Код валюты</td>
-                    @{
-                    i = 0;
-                    }
-                    @for (i = 0; i < Model.obj_list.Count; i++)
-                    {
-                    <td>
-                        <input type="hidden" value="@Model.obj_list.ElementAt(i).OrderFormViewId" name="obj_list[@i].OrderFormViewId"/>
-                        <select class="form-control req" 
-                                name="obj_list[@i].code_money" 
-                                title="Буквенный код валюты (в соответствии со стандартом ISO 4217)">
-                            <option></option>
-                            @foreach (var a in ViewBag.type_money_l)
-                            {
-
-                                string str = "";
-                                if (a == Model.obj_list.ElementAt(i).code_money)
-                                { str = "selected"; }
-
-                                <option @str>@a</option>
-                            }
-                        </select>
-                    </td>
+                    @for (i = 0; i < Model.obj_list.Count; i++){
+                        <td>
+                            <input type="hidden" 
+                                   value="@Model.obj_list.ElementAt(i).OrderFormViewId" 
+                                   name="obj_list[@i].OrderFormViewId"/>
+                            <select class="form-control req" 
+                                    name="obj_list[@i].code_money" 
+                                    title="Буквенный код валюты (в соответствии со стандартом ISO 4217)">
+                                <option></option>
+                                @foreach (var a in ViewBag.type_money_l){
+                                    string str = "";
+                                    if (a == Model.obj_list.ElementAt(i).code_money){
+                                        str = "selected";
+                                    }
+                                    <option @str>@a</option>
+                                }
+                            </select>
+                        </td>
                     }
                 </tr>
+
                 <tr>
                     <td>Руководитель объекта</td>
-                    @{
-                    i = 0;
-                    }
-                    @for (i = 0; i < Model.obj_list.Count; i++)
-                    {
-                    <td>
-                        <input class="form-control req" 
-                               type="text" 
-                               name="obj_list[@i].boss_object" 
-                               value="@Model.obj_list.ElementAt(i).boss_object" title="Контактный телефон руководителя точки юр. лица, по которой подразделение инкассации производит инкассацию"/>
-                    </td>
+                    @for (i = 0; i < Model.obj_list.Count; i++){
+                        <td>
+                            <input class="form-control req" 
+                                   type="text" 
+                                   name="obj_list[@i].boss_object" 
+                                   value="@Model.obj_list.ElementAt(i).boss_object" 
+                                   title="Контактный телефон руководителя точки юр. лица, по которой подразделение инкассации производит инкассацию"/>
+                        </td>
                     }
                 </tr>
+
                 <tr>
                     <td>Желательная дата начала обслуживания</td>
-                    @{
-                    i = 0;
-                    }
-                    @for (i = 0; i < Model.obj_list.Count; i++)
-                    {
-                    <td>
-                        <input class="form-control req" 
-                               type="date" 
-                               name="obj_list[@i].start_data" 
-                               value="@Model.obj_list.ElementAt(i).start_data" 
-                               title="ДД.ММ.ГГГГ"/>
-                    </td>
+                    @for (i = 0; i < Model.obj_list.Count; i++){
+                        <td>
+                            <input class="form-control req" 
+                                   type="date" 
+                                   name="obj_list[@i].start_data" 
+                                   value="@Model.obj_list.ElementAt(i).start_data" 
+                                   title="ДД.ММ.ГГГГ"/>
+                        </td>
                     }
                 </tr>
+
                 <tr>
                     <td>Рабочие дни</td>
-                    @{
-                    i = 0;
+                    @for (i = 0; i < Model.obj_list.Count; i++){
+                        <td></td>
                     }
-                    @for (i = 0; i < Model.obj_list.Count; i++)
-                    {
-                    <td></td>
-                    }
-
                 </tr>
+
                 <tr>
                     <td align="right">C:</td>
-                    @{
-                    i = 0;
-                    }
-                    @for (i = 0; i < Model.obj_list.Count; i++)
-                    {
+                    @for (i = 0; i < Model.obj_list.Count; i++){
                         <td>
                             <input type="time" 
                                    class="form-control" 
@@ -217,250 +181,198 @@
                         </td>
                     }
                 </tr>
+
                 <tr>
                     <td align="right">До:</td>
-                    @{
-                    i = 0;
-                    }
-                    @for (i = 0; i < Model.obj_list.Count; i++)
-                    {
-                    <td>
-                        <input type="time" 
-                               class="form-control" 
-                               name="obj_list[@i].work_time_end" 
-                               value="@Model.obj_list.ElementAt(i).work_time_end" 
-                               title="Окончание работы объекта инкассации в рабочие дни"/>
-                    </td>
+                    @for (i = 0; i < Model.obj_list.Count; i++){
+                        <td>
+                            <input type="time" 
+                                   class="form-control" 
+                                   name="obj_list[@i].work_time_end" 
+                                   value="@Model.obj_list.ElementAt(i).work_time_end" 
+                                   title="Окончание работы объекта инкассации в рабочие дни"/>
+                        </td>
                     }
                 </tr>
 
                 <tr>
                     <td>Субота</td>
-                    @{
-                    i = 0;
+                    @for (i = 0; i < Model.obj_list.Count; i++){
+                        <td></td>
                     }
-                    @for (i = 0; i < Model.obj_list.Count; i++)
-                    {
-                    <td></td>
-                    }
-
                 </tr>
+
                 <tr>
                     <td align="right">C:</td>
-                    @{
-                    i = 0;
-                    }
-                    @for (i = 0; i < Model.obj_list.Count; i++)
-                    {
-                    <td>
-                        <input type="time" 
-                               class="form-control" 
-                               name="obj_list[@i].saturd_time_start" 
-                               value="@Model.obj_list.ElementAt(i).saturd_time_start" 
-                               title="Начало работы объекта инкассации в cубботу"/>
-                    </td>
+                    @for (i = 0; i < Model.obj_list.Count; i++){
+                        <td>
+                            <input type="time" 
+                                   class="form-control" 
+                                   name="obj_list[@i].saturd_time_start" 
+                                   value="@Model.obj_list.ElementAt(i).saturd_time_start" 
+                                   title="Начало работы объекта инкассации в cубботу"/>
+                        </td>
                     }
                 </tr>
+
                 <tr>
                     <td align="right">До:</td>
-                    @{
-                    i = 0;
-                    }
-                    @for (i = 0; i < Model.obj_list.Count; i++)
-                    {
-                    <td>
-                        <input type="time" 
-                               class="form-control" 
-                               name="obj_list[@i].saturd_time_end" 
-                               value="@Model.obj_list.ElementAt(i).saturd_time_end" 
-                               title="Окончание работы объекта инкассации в субботу"/>
-                    </td>
+                    @for (i = 0; i < Model.obj_list.Count; i++){
+                        <td>
+                            <input type="time" 
+                                   class="form-control" 
+                                   name="obj_list[@i].saturd_time_end" 
+                                   value="@Model.obj_list.ElementAt(i).saturd_time_end" 
+                                   title="Окончание работы объекта инкассации в субботу"/>
+                        </td>
                     }
                 </tr>
 
                 <tr>
                     <td>Воскресенье</td>
-                    @{
-                    i = 0;
+                    @for (i = 0; i < Model.obj_list.Count; i++){
+                        <td></td>
                     }
-                    @for (i = 0; i < Model.obj_list.Count; i++)
-                    {
-                    <td></td>
-                    }
-
                 </tr>
+
                 <tr>
                     <td align="right">C:</td>
-                    @{
-                    i = 0;
-                    }
-                    @for (i = 0; i < Model.obj_list.Count; i++)
-                    {
-                    <td>
-                        <input type="time" 
-                               class="form-control" 
-                               name="obj_list[@i].sund_time_start" 
-                               value="@Model.obj_list.ElementAt(i).sund_time_start" 
-                               title="Начало работы объекта инкассации в в воскресенье"/>
-                    </td>
+                    @for (i = 0; i < Model.obj_list.Count; i++){
+                        <td>
+                            <input type="time" 
+                                   class="form-control" 
+                                   name="obj_list[@i].sund_time_start" 
+                                   value="@Model.obj_list.ElementAt(i).sund_time_start" 
+                                   title="Начало работы объекта инкассации в в воскресенье"/>
+                        </td>
                     }
                 </tr>
+
                 <tr>
                     <td align="right">До:</td>
-                    @{
-                    i = 0;
-                    }
-                    @for (i = 0; i < Model.obj_list.Count; i++)
-                    {
-                    <td>
-                        <input type="time" 
-                               class="form-control" 
-                               name="obj_list[@i].sund_time_end" 
-                               value="@Model.obj_list.ElementAt(i).sund_time_end" 
-                               title="Окончание работы объекта инкассации в в воскресенье"/>
-                    </td>
+                    @for (i = 0; i < Model.obj_list.Count; i++){
+                        <td>
+                            <input type="time" 
+                                   class="form-control" 
+                                   name="obj_list[@i].sund_time_end" 
+                                   value="@Model.obj_list.ElementAt(i).sund_time_end" 
+                                   title="Окончание работы объекта инкассации в в воскресенье"/>
+                        </td>
                     }
                 </tr>
 
                 <tr>
                     <td>Тип адреса</td>
-                    @{
-                    i = 0;
-                    }
-                    @for (i = 0; i < Model.obj_list.Count; i++)
-                    {
+                    @for (i = 0; i < Model.obj_list.Count; i++){
                         <td>
                             <select class="form-control req" name="obj_list[@i].type_adress">
                                 <option></option>
-                                @foreach (var a in ViewBag.type_adress_l)
-                                {
-
+                                @foreach (var a in ViewBag.type_adress_l){
                                     string str = "";
-                                    if (a == Model.obj_list.ElementAt(i).type_adress)
-                                    { str = "selected"; }
-
+                                    if (a == Model.obj_list.ElementAt(i).type_adress){
+                                        str = "selected";
+                                    }
                                     <option @str>@a</option>
                                 }
                             </select>
                         </td>
                     }
                 </tr>
+
                 <tr>
                     <td>Тип населенного пункта</td>
-                    @{
-                    i = 0;
-
-                    }
-                    @for (i = 0; i < Model.obj_list.Count; i++)
-                    {
-                    <td>
-                        <select class="form-control req" 
-                                name="obj_list[@i].type_city" 
-                                title="Тип населенного пункта, в котором находится объект инкассации">
-                            <option></option>
-                            @foreach (var a in ViewBag.type_city_l)
-                            {
-
-                                string str = "";
-                                if (a == Model.obj_list.ElementAt(i).type_city)
-                                { str = "selected"; }
-
-                                <option @str>@a</option>
-                            }
-                        </select>
-                    </td>
+                    @for (i = 0; i < Model.obj_list.Count; i++){
+                        <td>
+                            <select class="form-control req" 
+                                    name="obj_list[@i].type_city" 
+                                    title="Тип населенного пункта, в котором находится объект инкассации">
+                                <option></option>
+                                @foreach (var a in ViewBag.type_city_l){
+                                    string str = "";
+                                    if (a == Model.obj_list.ElementAt(i).type_city){
+                                        str = "selected";
+                                    }
+                                    <option @str>@a</option>
+                                }
+                            </select>
+                        </td>
                     }
                 </tr>
+
                 <tr>
                     <td>Наименование населенного пункта</td>
-                    @{
-                    i = 0;
-                    }
-                    @for (i = 0; i < Model.obj_list.Count; i++)
-                    {
-                    <td>
-                        <input type="text" 
-                               class="form-control req" 
-                               name="obj_list[@i].title_city" 
-                               value="@Model.obj_list.ElementAt(i).title_city" 
-                               title="Наименование населенного пункта, в котором находится объект инкассации"/>
-                    </td>
+                    @for (i = 0; i < Model.obj_list.Count; i++){
+                        <td>
+                            <input type="text" 
+                                   class="form-control req" 
+                                   name="obj_list[@i].title_city" 
+                                   value="@Model.obj_list.ElementAt(i).title_city" 
+                                   title="Наименование населенного пункта, в котором находится объект инкассации"/>
+                        </td>
                     }
                 </tr>
+
                 <tr>
                     <td>Улица</td>
-                    @{
-                    i = 0;
-                    }
-                    @for (i = 0; i < Model.obj_list.Count; i++)
-                    {
-                    <td>
-                    <input type="text" 
-                           class="form-control req" 
-                           name="obj_list[@i].title_street" 
-                           value="@Model.obj_list.ElementAt(i).title_street" 
-                           title="Улица, по которой находится объект инкассации"/>
-                    </td>
-                    }
-                <tr>
-                    <td>Номер дома (владение)</td>
-                    @{
-                    i = 0;
-                    }
-                    @for (i = 0; i < Model.obj_list.Count; i++)
-                    {
-                    <td>
+                    @for (i = 0; i < Model.obj_list.Count; i++){
+                        <td>
                         <input type="text" 
                                class="form-control req" 
-                               name="obj_list[@i].num_build" 
-                               value="@Model.obj_list.ElementAt(i).num_build" 
-                               title="Номер дома (владение), в котором находится объект инкассации"/>
-                    </td>
+                               name="obj_list[@i].title_street" 
+                               value="@Model.obj_list.ElementAt(i).title_street" 
+                               title="Улица, по которой находится объект инкассации"/>
+                        </td>
                     }
                 </tr>
+
+                <tr>
+                    <td>Номер дома (владение)</td>
+                    @for (i = 0; i < Model.obj_list.Count; i++){
+                        <td>
+                            <input type="text" 
+                                   class="form-control req" 
+                                   name="obj_list[@i].num_build" 
+                                   value="@Model.obj_list.ElementAt(i).num_build" 
+                                   title="Номер дома (владение), в котором находится объект инкассации"/>
+                        </td>
+                    }
+                </tr>
+
                 <tr>
                     <td>Корпус (строение)</td>
-                    @{
-                    i = 0;
-                    }
-                    @for (i = 0; i < Model.obj_list.Count; i++)
-                    {
-                    <td>
-                        <input type="text" 
-                               class="form-control" 
-                               name="obj_list[@i].title_part" 
-                               value="@Model.obj_list.ElementAt(i).title_part" 
-                               title="Корпус (строение), в котором находится объект инкассации"/>
-                    </td>
+                    @for (i = 0; i < Model.obj_list.Count; i++){
+                        <td>
+                            <input type="text" 
+                                   class="form-control" 
+                                   name="obj_list[@i].title_part" 
+                                   value="@Model.obj_list.ElementAt(i).title_part" 
+                                   title="Корпус (строение), в котором находится объект инкассации"/>
+                        </td>
                     }
                 </tr>
+
                 <tr>
                     <td>Инкассаторская услуга</td>
-                    @{
-                    i = 0;
-                    }
-                    @for (i = 0; i < Model.obj_list.Count; i++)
-                    {
-                    <td>
-                        <select class="form-control" 
-                                name="obj_list[@i].type_order" 
-                                title="Инкассаторская услуга для оказания юридическому лицу">
-                            <option></option>
-                            @foreach (var a in ViewBag.ref_book)
-                            {
-                                if (a.type == 0)
-                                {
-                                    string str = "";
-                                    if (a.title == Model.obj_list.ElementAt(i).type_order)
-                                    { str = "selected"; }
-
-                                    <option @str>@a.title</option>
+                    @for (i = 0; i < Model.obj_list.Count; i++){
+                        <td>
+                            <select class="form-control" 
+                                    name="obj_list[@i].type_order" 
+                                    title="Инкассаторская услуга для оказания юридическому лицу">
+                                <option></option>
+                                @foreach (var a in ViewBag.ref_book){
+                                    if (a.type == 0){
+                                        string str = "";
+                                        if (a.title == Model.obj_list.ElementAt(i).type_order){
+                                            str = "selected";
+                                        }
+                                        <option @str>@a.title</option>
+                                    }
                                 }
-                            }
-                        </select>
-                    </td>
+                            </select>
+                        </td>
                     }
                 </tr>
+
             </tbody>
         </table>
     </form>

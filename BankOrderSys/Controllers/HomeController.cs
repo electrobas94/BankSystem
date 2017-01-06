@@ -12,20 +12,13 @@ namespace BankOrderSys.Controllers
 {
     public class HomeController : Controller
     {
-        List<string> period_list    = new List<string>();
         List<string> week_days_l    = new List<string>();
-        List<string> type_servece_l = new List<string>();
         List<string> type_money_l   = new List<string>();
         List<string> type_adress_l  = new List<string>();
         List<string> type_city_l    = new List<string>();
-        List<string> type_get_money_l = new List<string>();
-        List<string> type_order_l   = new List<string>();
         List<string> bank_dep_l     = new List<string>();
 
         ManagerDB db_man = new ManagerDB();
-
-        int? cur_sort = 1;
-        IEnumerable<OrderFormView> sort_list;
 
         [Authorize]
         public ActionResult Lists()
@@ -149,7 +142,7 @@ namespace BankOrderSys.Controllers
                 switch (Math.Abs((int)sort))
                 {
                     case 1:
-                        order_list = order_list.OrderBy(obj => obj.date);//db_man.OrderList.AsEnumerable().OrderBy(obj => obj.date);
+                        order_list = order_list.OrderBy(obj => obj.date);
                         break;
                     case 2:
                         order_list = order_list.OrderBy(obj => obj.number);
@@ -180,48 +173,22 @@ namespace BankOrderSys.Controllers
         {
             ViewBag.edit_type = 0;
 
-            //db_man.Entry(order).State = EntityState.Added;
             db_man.OrderList.Add(order);
             db_man.SaveChanges();
 
-            //string tmp = "";
-            //foreach (DbEntityValidationResult  a in db_man.GetValidationErrors())
-                //foreach ( var b in a.ValidationErrors)
-                    //tmp += b.ErrorMessage;
-
             return RedirectToAction("Index");//"Index"
-            //return View(new OrderFormView());
         }
 
         [Authorize]
         [HttpGet]
         public ActionResult EditOrder(int index)
         {
-            OrderFormView tmp = null;// db_man.OrderList.Find(index);
+            OrderFormView tmp = db_man.OrderList.Find(index);
 
-            foreach(var order in db_man.OrderList)
-            {
-                if(order.id == index)
-                    tmp = order;
-            }
-            //db_man.OrderList.Where( (OrderFormViewId, index) => OrderFormViewId == index );
-
-            //          ¯\_(ツ)_/¯
             var obj_list = db_man.ObjectList.Where(c => c.OrderFormViewId == index );
-            if (obj_list != null)
-            {
-                //var ob = obj_list.AsEnumerable();
-                tmp.obj_list = obj_list.ToList();
 
-                /*
-                //var obj_list = db_man.ObjectList.ToList();
-                foreach (ObjectIncasation obj_inc in ob)
-                {
-                    if (obj_inc.OrderFormViewId == index)
-                        tmp.obj_list.Add(obj_inc);
-                }
-                */
-            }
+            if (obj_list != null)
+                tmp.obj_list = obj_list.ToList();
 
             ViewBag.edit_type = 1;
             return View("Order", tmp );
@@ -276,32 +243,19 @@ namespace BankOrderSys.Controllers
 
         public HomeController()
         {
-            sort_list = db_man.OrderList;
             ViewBag.admin = false;
 
             ViewBag.ref_book = db_man.ReferenseBook;
 
             ViewBag.week_days_l = week_days_l;
-            ViewBag.period_list = period_list;
-            ViewBag.type_servece_l = type_servece_l;
             ViewBag.type_money_l = type_money_l;
             ViewBag.type_adress_l = type_adress_l;
             ViewBag.type_city_l = type_city_l;
-            ViewBag.type_get_money_l = type_get_money_l;
-            ViewBag.type_order_l = type_order_l;
             ViewBag.bank_dep_l = bank_dep_l;
-
-            type_order_l.Add("Тип 1");
-            type_order_l.Add("Тип 2");
-            type_order_l.Add("Тип 3");
 
             bank_dep_l.Add("Подразделение 1");
             bank_dep_l.Add("Подразделение 2");
             bank_dep_l.Add("Подразделение 3");
-
-            type_get_money_l.Add("Способ 1");
-            type_get_money_l.Add("Способ 2");
-            type_get_money_l.Add("Способ 3");
 
             type_adress_l.Add("тип 1");
             type_adress_l.Add("тип 2");
@@ -315,17 +269,6 @@ namespace BankOrderSys.Controllers
             type_money_l.Add("RU");
             type_money_l.Add("EU");
             type_money_l.Add("US");
-
-            type_servece_l.Add("Услуга 1");
-            type_servece_l.Add("Услуга 2");
-            type_servece_l.Add("Услуга 3");
-
-            period_list.Add("Ежедневно");
-            period_list.Add("Рабочие дни");
-            period_list.Add("Через день");
-            period_list.Add("День недели");
-            period_list.Add("По заявке");
-            period_list.Add("По звонку");
 
             week_days_l.Add("Понедельник");
             week_days_l.Add("Вторник");
