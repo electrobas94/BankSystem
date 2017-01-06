@@ -1,91 +1,86 @@
 ﻿@model IEnumerable<BankOrderSys.Models.OrderFormView>
 @using Microsoft.AspNet.Identity
+@using BankOrderSys.Models
+
+@helper itemList(OrderFormView elem)
+{
+string fmt = "00000";
+string style = "";
+
+if (elem.status == "Подписан")
+{
+    style = "color:#3a993a;";
+}
+else if (elem.status == "Удаленная")
+{
+    style = "color:#ff4a4a;";
+}
+        <div class="tr" 
+             style="width:100%;" 
+             onclick="window.location.href = '/Home/EditOrder?index=@elem.id';">
+            <div class="td" style="width:6%">2-@elem.id.ToString(fmt)</div>
+            <div class="td" style="width:10%">@elem.date</div>
+            <div class="td" style="width:9%;@style">@elem.status</div>
+            <div class="td" style="width:25%">@elem.type</div>
+            <div class="td" style="width:14%">@elem.bank_dep</div>
+            <div class="td" style="width:18%">@elem.title_org</div>
+            <div class="td" style="width:18%">
+                @elem.title_bank
+                @if (ViewBag.admin)
+                {
+                    <span>
+                        <button onclick="window.location.href = '/Home/Sign?id=@elem.id';event.stopPropagation();"
+                                class="btn btn-default pull-right"
+                                type="button">
+                            Подписать
+                        </button>
+                    </span>
+                }
+            </div>
+        </div>
+}
 
 <div class="row">
-    <h2>Список ваших заявок на инкасацию. 
-            <button class="btn btn-default btn-lg pull-right" 
-                    style="display:inline-block"
-                    onclick="window.location.href = '/Home/AddOrder';">
-                Создать новую заявку
-            </button>
+    <h2>
+        Список ваших заявок на инкасацию.
+        <button class="btn btn-default btn-lg pull-right"
+                style="display:inline-block"
+                onclick="window.location.href = '/Home/AddOrder';">
+            Создать новую заявку
+        </button>
     </h2>
-    <p>Для просмотра или редактирования выберете элемент из таблицы заявок</p> 
-    <div class="col-md-12">
-        @Html.Partial("FilterBar")
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    @{ 
-                        int[] s = new int[3];
-                        int j;
-                        for (j = 0; j < 3; j++)
-                        {
-                            s[j] = j + 1;
-                            if (ViewBag.sort != null)
-                            {
-                                if (s[j] == Math.Abs(ViewBag.sort))
-                                {
-                                    s[j] = ViewBag.sort * (-1);
-                                }
-                            }
-                        }
-                    }
-                    <th onclick="window.location.href = '/Home/Index?sort=@s[1]'" style="cursor:pointer">Номер</th>
-                    <th onclick="window.location.href = '/Home/Index?sort=@s[0]';" style="cursor:pointer">Дата</th>
-                    <th onclick="window.location.href = '/Home/Index?sort=@s[2]';" style="cursor:pointer">Статус</th>
-                    <th>Тип заявки</th>
-                    <th>Подразделение банка</th>
-                    <th>Название организации</th>
-                    <th>Название банка</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    string fmt = "00000";
-                    int count = 0;
-                    int i = 0;
-                }
-                        @foreach (var a in Model)
-                        {
-                            if (a.user_name == User.Identity.GetUserName() || ViewBag.admin )
-                            {
-                                count++;
-                                <tr onclick="window.location.href = '/Home/EditOrder?index=@a.id';"
-                                    style="cursor:pointer">
-                                    <td>2-@a.id.ToString(fmt)</td>
-                                    <td>@a.date</td>
-                                    <td>@a.status</td>
-                                    <td>@a.type</td>
-                                    <td>@a.bank_dep</td>
-                                    <td>@a.title_org</td>
-                                    <td>@a.title_bank</td>
-                                    @{
-                                        if (ViewBag.admin)
-                                        {
-                                            <td  onclick="window.location.href = '/Home/Sign?id=@a.id';event.stopPropagation()" >
-                                                <button class="btn btn-default">Подписать</button>
-                                            </td>
-                                        }
-                                    }
-                                </tr>
-
-                            }
-                            i++;
-                        }
-                @{ 
-                    if(count == 0 )
-                    {
-                        <tr>
-                            <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                        </tr>
-                    }
-                }
-            </tbody>
-        </table>
+    <p>Для просмотра или редактирования выберете элемент из таблицы заявок</p>
+    @Html.Partial("FilterBar")
+    <div class="table col-md-12">
         @{
-            if (count == 0)
+            int[] s = new int[3];
+            int j;
+            for (j = 0; j < 3; j++)
             {
+                s[j] = j + 1;
+                if (ViewBag.sort != null)
+                {
+                    if (s[j] == Math.Abs(ViewBag.sort))
+                    {
+                        s[j] = ViewBag.sort * (-1);
+                    }
+                }
+            }
+        }
+        <div class="tr" style="width:100%;">
+            <div class="td th" onclick="window.location.href = '/Home/Index?sort=@s[1]'" style="cursor:pointer">Номер</div>
+            <div class="td th" onclick="window.location.href = '/Home/Index?sort=@s[0]';" style="cursor:pointer">Дата</div>
+            <div class="td th" onclick="window.location.href = '/Home/Index?sort=@s[2]';" style="cursor:pointer">Статус</div>
+            <div class="td th">Тип заявки</div>
+            <div class="td th">Подразделение банка</div>
+            <div class="td th">Название организации</div>
+            <div class="td th">Название банка</div>
+        </div>
+                @foreach (var a in Model){
+                    @itemList(a)
+                }
+        @{
+            if (Model == null || Model.Count() == 0){
                 <p>К сожалению у вас нет заявок</p>
             }
         }
