@@ -2,15 +2,14 @@
 
 <div class="form-group col-md-12">
     @Html.LabelFor(model => model.phone_worker, htmlAttributes: new { @class = "control-label" })
-    <input name="phone_worker" class = "form-control" type = "text" required value="@Model.phone_worker" title="Номер телефона для связи" />
+    <input name="phone_worker" class = "form-control req" type = "text" value="@Model.phone_worker" title="Номер телефона для связи" />
     @Html.ValidationMessageFor(model => model.phone_worker, "", new { @class = "text-danger" })
 </div>
 
 <div class="form-group col-md-12">
     @Html.LabelFor(model => model.name_worker, htmlAttributes: new { @class = "control-label" })
     <textarea  name="name_worker" 
-              class = "form-control" 
-              required 
+              class = "form-control req"  
               rows = "3" 
               title="ФИО, Должность">
         @Model.name_worker

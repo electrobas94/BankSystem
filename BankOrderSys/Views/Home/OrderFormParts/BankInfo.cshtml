@@ -3,9 +3,8 @@
 <div class="form-group col-md-6">
     @Html.LabelFor(model => model.num_score_push, htmlAttributes: new { @class = "control-label" })
     <input name="num_score_push" 
-           class="form-control" 
-           type="text" 
-           required 
+           class="form-control req" 
+           type="text"  
            value="@Model.num_score_push" 
            title="Номер счета клиента в банке, на который требуется зачислить инкассированные денежные средства"/>
     @Html.ValidationMessageFor(model => model.num_score_push, "", new { @class = "text-danger" })
@@ -14,9 +13,8 @@
 <div class="form-group col-md-6">
     @Html.LabelFor(model => model.SWIFT, htmlAttributes: new { @class = "control-label" })
     <input name="SWIFT" 
-           class="form-control" 
-           type="text" 
-           required 
+           class="form-control req" 
+           type="text"  
            value="@Model.SWIFT" 
            title="SWIFT банка, в который требуется инкассировать денежные средства" />
     @Html.ValidationMessageFor(model => model.SWIFT, "", new { @class = "text-danger" })
@@ -25,9 +23,8 @@
 <div class="form-group col-md-6">
     @Html.LabelFor(model => model.BIK, htmlAttributes: new { @class = "control-label" })
     <input name="BIK" 
-           class="form-control" 
-           type="text" 
-           required 
+           class="form-control req" 
+           type="text"  
            value="@Model.BIK" 
            title="БИК банка, в который требуется инкассировать денежные средства"/>
     @Html.ValidationMessageFor(model => model.BIK, "", new { @class = "text-danger" })
@@ -36,9 +33,8 @@
 <div class="form-group col-md-6">
     @Html.LabelFor(model => model.num_bank_score, htmlAttributes: new { @class = "control-label" })
     <input name="num_bank_score" 
-           class="form-control" 
-           type="text" 
-           required 
+           class="form-control req" 
+           type="text"  
            value="@Model.num_bank_score" 
            title="Счет и реквизиты банка, на который производится перечисление проинкассированных средств." />
     @Html.ValidationMessageFor(model => model.num_bank_score, "", new { @class = "text-danger" })
@@ -47,8 +43,7 @@
 <div class="form-group col-md-12">
     @Html.LabelFor(model => model.title_bank, htmlAttributes: new { @class = "control-label" })
     <textarea name="title_bank" 
-              class="form-control" 
-              required 
+              class="form-control req"  
               rows="3" 
               title="Наименование банка, в который требуется инкассировать денежные средства">
         @Model.title_bank

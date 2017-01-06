@@ -31,7 +31,7 @@
                     {
                     <td>
                         <input type="time" 
-                               class="form-control" 
+                               class="form-control req" 
                                name="obj_list[@i].time" 
                                value="@Model.obj_list.ElementAt(i).time" 
                                title="ЧЧ:ММ" />
@@ -46,7 +46,7 @@
                     @for (i = 0; i < Model.obj_list.Count; i++)
                     {
                     <td>
-                        <select class="form-control" 
+                        <select class="form-control req" 
                                 name="obj_list[@i].type_get_money" 
                                 title="Предпочитаемый способ сдачи денежной наличности для инкассации.">
                             <option></option>
@@ -73,7 +73,7 @@
                     @for (i = 0; i < Model.obj_list.Count; i++)
                     {
                     <td>
-                        <select class="form-control" 
+                        <select class="form-control req" 
                                 name="obj_list[@i].period" 
                                 title="Ежедневно/Рабочие дни/Через день/День недели/По заявке/По звонку">
                             <option></option>
@@ -124,7 +124,7 @@
                     @for (i = 0; i < Model.obj_list.Count; i++)
                     {
                     <td>
-                        <input class="form-control" 
+                        <input class="form-control req" 
                                type="number" 
                                name="obj_list[@i].count_money" 
                                min="1" step="0.01"  
@@ -141,7 +141,7 @@
                     @for (i = 0; i < Model.obj_list.Count; i++)
                     {
                     <td>
-                        <select class="form-control" 
+                        <select class="form-control req" 
                                 name="obj_list[@i].code_money" 
                                 title="Буквенный код валюты (в соответствии со стандартом ISO 4217)">
                             <option></option>
@@ -166,7 +166,7 @@
                     @for (i = 0; i < Model.obj_list.Count; i++)
                     {
                     <td>
-                        <input class="form-control" 
+                        <input class="form-control req" 
                                type="text" 
                                name="obj_list[@i].boss_object" 
                                value="@Model.obj_list.ElementAt(i).boss_object" title="Контактный телефон руководителя точки юр. лица, по которой подразделение инкассации производит инкассацию"/>
@@ -181,7 +181,7 @@
                     @for (i = 0; i < Model.obj_list.Count; i++)
                     {
                     <td>
-                        <input class="form-control" 
+                        <input class="form-control req" 
                                type="date" 
                                name="obj_list[@i].start_data" 
                                value="@Model.obj_list.ElementAt(i).start_data" 
@@ -329,7 +329,7 @@
                     @for (i = 0; i < Model.obj_list.Count; i++)
                     {
                         <td>
-                            <select class="form-control" name="obj_list[@i].type_adress">
+                            <select class="form-control req" name="obj_list[@i].type_adress">
                                 <option></option>
                                 @foreach (var a in ViewBag.type_adress_l)
                                 {
@@ -353,7 +353,7 @@
                     @for (i = 0; i < Model.obj_list.Count; i++)
                     {
                     <td>
-                        <select class="form-control" 
+                        <select class="form-control req" 
                                 name="obj_list[@i].type_city" 
                                 title="Тип населенного пункта, в котором находится объект инкассации">
                             <option></option>
@@ -379,7 +379,7 @@
                     {
                     <td>
                         <input type="text" 
-                               class="form-control" 
+                               class="form-control req" 
                                name="obj_list[@i].title_city" 
                                value="@Model.obj_list.ElementAt(i).title_city" 
                                title="Наименование населенного пункта, в котором находится объект инкассации"/>
@@ -395,7 +395,7 @@
                     {
                     <td>
                     <input type="text" 
-                           class="form-control" 
+                           class="form-control req" 
                            name="obj_list[@i].title_street" 
                            value="@Model.obj_list.ElementAt(i).title_street" 
                            title="Улица, по которой находится объект инкассации"/>
@@ -410,7 +410,7 @@
                     {
                     <td>
                         <input type="text" 
-                               class="form-control" 
+                               class="form-control req" 
                                name="obj_list[@i].num_build" 
                                value="@Model.obj_list.ElementAt(i).num_build" 
                                title="Номер дома (владение), в котором находится объект инкассации"/>

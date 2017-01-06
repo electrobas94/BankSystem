@@ -2,7 +2,7 @@
 
 <div class="form-group col-md-6">
     @Html.LabelFor(model => model.INN_KIO, htmlAttributes: new { @class = "control-label" })
-    <input name="INN_KIO" class="form-control" type="text" required value="@Model.INN_KIO" />
+    <input name="INN_KIO" class="form-control req" type="text" value="@Model.INN_KIO" />
     @Html.ValidationMessageFor(model => model.INN_KIO, "", new { @class = "text-danger" })
 </div>
 
@@ -25,6 +25,6 @@
 
 <div class="form-group col-md-12">
     @Html.LabelFor(model => model.title_org, htmlAttributes: new { @class = "control-label" })
-    <textarea name="title_org" class="form-control" required rows="3">@Model.title_org</textarea>
+    <textarea name="title_org" class="form-control req" rows="3">@Model.title_org</textarea>
     @Html.ValidationMessageFor(model => model.title_org, "", new { @class = "text-danger" })
 </div>
