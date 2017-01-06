@@ -141,6 +141,7 @@
                     @for (i = 0; i < Model.obj_list.Count; i++)
                     {
                     <td>
+                        <input type="hidden" value="@Model.obj_list.ElementAt(i).OrderFormViewId" name="obj_list[@i].OrderFormViewId"/>
                         <select class="form-control req" 
                                 name="obj_list[@i].code_money" 
                                 title="Буквенный код валюты (в соответствии со стандартом ISO 4217)">
