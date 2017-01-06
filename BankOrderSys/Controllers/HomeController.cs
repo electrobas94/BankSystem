@@ -30,7 +30,43 @@ namespace BankOrderSys.Controllers
         [Authorize]
         public ActionResult Lists()
         {
-            return View();
+            return View(db_man.ReferenseBook);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult Lists(int? act, int? type, int? id, string value)
+        {
+                switch(act)
+                {
+                    //add new
+                    case 1:
+                        ItemList tmp = new ItemList();
+                        tmp.title = "Новый";
+                        tmp.type = (int)type;
+                        db_man.ReferenseBook.Add(tmp);
+                        db_man.SaveChanges();
+                        break;
+
+                    //del item
+                    case 2:
+                        if (id == null)
+                            break;
+                        ItemList del_item = db_man.ReferenseBook.Find((int)id);
+                        db_man.Entry(del_item).State = EntityState.Deleted;
+                        db_man.SaveChanges();
+                        break;
+
+                    //modify item
+                    case 3:
+                        if (id == null || value == null)
+                            break;
+                        ItemList mod_item = db_man.ReferenseBook.Find((int)id);
+                        mod_item.title = value;
+                        db_man.SaveChanges();
+                        break;
+            }
+            return View(db_man.ReferenseBook);
         }
 
         [Authorize]
@@ -71,7 +107,7 @@ namespace BankOrderSys.Controllers
             ViewBag.status      = status;
             ViewBag.date        = date;
             ViewBag.date_start  = date_start;
-            ViewBag.date_end = date_end;
+            ViewBag.date_end    = date_end;
 
             var order_list = db_man.OrderList.AsQueryable();
 
@@ -266,6 +302,8 @@ namespace BankOrderSys.Controllers
         {
             sort_list = db_man.OrderList;
             ViewBag.admin = false;
+
+            ViewBag.ref_book = db_man.ReferenseBook;
 
             ViewBag.week_days_l = week_days_l;
             ViewBag.period_list = period_list;

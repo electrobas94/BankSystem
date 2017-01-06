@@ -71,14 +71,16 @@
                 @Html.LabelFor(model => model.type, htmlAttributes: new { @class = "control-label" })
                 <select class="form-control" name="type" value="@Model.type" required>
                     <option></option>
-                    @foreach (var a in ViewBag.type_order_l)
+                    @foreach (var a in ViewBag.ref_book)
                     {
+                        if (a.type == 1)
+                        {
+                            string str = "";
+                            if (a.title == Model.type)
+                            { str = "selected"; }
 
-                        string str = "";
-                        if (a == Model.type)
-                        { str = "selected"; }
-
-                        <option @str>@a</option>
+                            <option @str>@a.title</option>
+                        }
                     }
                 </select>
                 @Html.ValidationMessageFor(model => model.type, "", new { @class = "text-danger" })

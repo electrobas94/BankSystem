@@ -15,6 +15,7 @@ namespace BankOrderSys.Models
         }
         public DbSet<OrderFormView> OrderList { get; set; }
         public DbSet<ObjectIncasation> ObjectList { get; set; }
+        public DbSet<ItemList> ReferenseBook { get; set; }
 
     }
 }

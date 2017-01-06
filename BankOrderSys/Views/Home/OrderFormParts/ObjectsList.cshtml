@@ -42,14 +42,16 @@
                     <td>
                         <select class="form-control" name="obj_list[@i].type_get_money">
                             <option></option>
-                            @foreach (var a in ViewBag.type_get_money_l)
+                            @foreach (var a in ViewBag.ref_book)
                             {
+                                if (a.type == 2)
+                                {
+                                    string str = "";
+                                    if (a.title == Model.obj_list.ElementAt(i).type_get_money)
+                                    { str = "selected"; }
 
-                                string str = "";
-                                if (a == Model.obj_list.ElementAt(i).type_get_money)
-                                { str = "selected"; }
-
-                                <option @str>@a</option>
+                                    <option @str>@a.title</option>
+                                }
                             }
                         </select>
                     </td>
@@ -65,14 +67,16 @@
                     <td>
                         <select class="form-control" name="obj_list[@i].period">
                             <option></option>
-                            @foreach (var a in ViewBag.period_list)
+                            @foreach (var a in ViewBag.ref_book)
                             {
-                                 
+                                if (a.type == 3)
+                                {
                                     string str = "";
-                                    if (a == Model.obj_list.ElementAt(i).period)
+                                    if (a.title == Model.obj_list.ElementAt(i).period)
                                     { str = "selected"; }
-                                
-                                <option @str>@a</option>
+
+                                    <option @str>@a.title</option>
+                                }
                             }
                         </select>
                     </td>
@@ -355,14 +359,16 @@
                     <td>
                         <select class="form-control" name="obj_list[@i].type_order">
                             <option></option>
-                            @foreach (var a in ViewBag.type_servece_l)
+                            @foreach (var a in ViewBag.ref_book)
                             {
+                                if (a.type == 0)
+                                {
+                                    string str = "";
+                                    if (a.title == Model.obj_list.ElementAt(i).type_order)
+                                    { str = "selected"; }
 
-                                string str = "";
-                                if (a == Model.obj_list.ElementAt(i).type_order)
-                                { str = "selected"; }
-
-                                <option @str>@a</option>
+                                    <option @str>@a.title</option>
+                                }
                             }
                         </select>
                     </td>
