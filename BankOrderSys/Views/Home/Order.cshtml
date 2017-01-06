@@ -69,7 +69,11 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group col-md-6">
                 @Html.LabelFor(model => model.type, htmlAttributes: new { @class = "control-label" })
-                <select class="form-control" name="type" value="@Model.type" required>
+                <select class="form-control" 
+                        name="type" 
+                        value="@Model.type" 
+                        required 
+                        title="Тип заявки, выбираемый при формировании ЭД">
                     <option></option>
                     @foreach (var a in ViewBag.ref_book)
                     {
@@ -88,7 +92,10 @@
 
             <div class="form-group col-md-6">
                 @Html.LabelFor(model => model.bank_dep, htmlAttributes: new { @class = "control-label" })
-                <select class="form-control" name="bank_dep" required>
+                <select class="form-control" 
+                        name="bank_dep" 
+                        required 
+                        title="Подразделения банка, где обслуживается клиент">
                     <option></option>
                     @foreach (var a in ViewBag.bank_dep_l)
                     {
