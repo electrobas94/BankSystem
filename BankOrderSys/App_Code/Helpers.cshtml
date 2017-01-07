@@ -1,0 +1,150 @@
+﻿@helper ObjIncasation( BankOrderSys.Models.ObjectIncasation obj, int num, IEnumerable<BankOrderSys.Models.ItemList> list)
+{
+    List<string> week_days_l = new List<string>();
+    List<string> type_money_l = new List<string>();
+    List<string> type_adress_l = new List<string>();
+    List<string> type_city_l = new List<string>();
+
+    @InitLists(week_days_l, type_money_l, type_adress_l, type_city_l)
+
+    string pre_name = "obj_list[" + num + "].";
+    <div class="incasation_obj">
+        <h4>Обьект @num</h4>
+        @comboboxRef(list, 0, pre_name + "type_order", "Инкассаторская услуга", obj.type_order, "Инкассаторская услуга для оказания юридическому лицу")
+
+        @comboboxRef(list, 2, pre_name + "type_get_money", "Способ сдачи денежной наличности",
+                     obj.type_get_money, "Предпочитаемый способ сдачи денежной наличности для инкассации.")
+
+        @input(name:(pre_name + "OrderFormViewId"), type:"hidden", required:false, value:(obj.OrderFormViewId.ToString() ))
+        @input(name: (pre_name + "id_obj"), type: "hidden", required: false, value: (obj.id_obj.ToString()))
+
+        @input(pre_name + "time", "Желательное время сдачи наличных", obj.time, "ЧЧ:ММ", true, "time")
+
+        @input(pre_name + "count_money", "Предполагаемый объем наличности", obj.count_money, 
+               "Сумма предназначенная клиентом к инкассации. М.б. как в рублях так и в ин. валюте", true, "number")
+
+        @combobox(type_money_l, pre_name + "code_money", "Код валюты", obj.code_money, "Буквенный код валюты (в соответствии со стандартом ISO 4217)")
+
+        @input(pre_name + "boss_object", "Руководитель объекта", obj.boss_object, 
+               "Контактный телефон руководителя точки юр. лица, по которой подразделение инкассации производит инкассацию", true)
+
+        @input(pre_name + "start_data", "Желательная дата начала обслуживания", obj.start_data, "ДД.ММ.ГГГГ", true, "date")
+
+        @comboboxRef(list, 3, pre_name + "period", "Периодичность оказания инкассаторских услуг",
+                     obj.period, "Ежедневно/Рабочие дни/Через день/День недели/По заявке/По звонку")
+
+        @combobox(week_days_l, pre_name + "week_day", "День недели", obj.week_day, "День недели, выбираемый для оказания услуг по объекту инкассации")
+
+        @time_period("Рабочие дни", obj.work_time_start,    obj.work_time_end,   "work_time_start",     "work_time_end")
+        @time_period("Суббота",     obj.saturd_time_start,  obj.saturd_time_end, "saturd_time_start",   "saturd_time_end")
+        @time_period("Воскресенье", obj.sund_time_start,    obj.sund_time_end,   "sund_time_start",     "sund_time_end")
+
+        @combobox(type_adress_l, pre_name + "type_adress", "Тип адреса", obj.type_adress)
+        @combobox(type_city_l, pre_name + "type_city", "Тип населенного пункта", obj.type_city, "Тип населенного пункта, в котором находится объект инкассации")
+
+        @input(pre_name + "title_city", "Наименование населенного пункта", obj.title_city, 
+               "Наименование населенного пункта, в котором находится объект инкассации", true)
+
+        @input(pre_name + "title_street", "Улица",                 obj.title_street, "Улица, по которой находится объект инкассации", true)
+        @input(pre_name + "num_build",    "Номер дома (владение)", obj.num_build,    "Номер дома (владение), в котором находится объект инкассации", true)
+        @input(pre_name + "title_part",   "Корпус (строение)",     obj.title_part,   "Корпус (строение), в котором находится объект инкассации", true)
+    </div>
+}
+
+@helper time_period(string name, string val_s, string val_e, string name_s, string name_e)
+{
+    <h5>@name</h5>
+    <div class="delta_time">
+        <div>
+            @input(name_s, "C",  val_s, "Начало работы объекта инкассации в " + @name, false, "time")
+        </div>
+        <div>
+            @input(name_e, "До", val_e, "Окончание работы объекта инкассации в " + @name, false, "time")
+        </div>
+    </div>
+}
+
+@helper input(string name="", string label="", string value="", string title="", bool required=true, string type="text", string cls="")
+{
+    string req = "";
+    string number = "min=\"0\" step=\"0.01\"";
+    if (type != number) {
+        number = "";
+    }
+    if (required) {
+        req = "req";
+    }
+    if (label != ""){
+        <label class="obj_label">@label</label>
+    }
+    <input name="@name" title="@title" value="@value" type="@type" class="form-control @req @cls" @number/>
+}
+
+@helper combobox(List<string> list, string name="", string label="", string value="", string title="", bool required = true)
+{
+    string req = "";
+    if (required){
+        req = "req";
+    }
+    if (label != ""){
+        <label class="obj_label">@label</label>
+    }
+    <select class="form-control @req" name="@name" title="@title">
+        <option></option>
+        @foreach (var a in list) {
+            string str = "";
+            if (a == value){
+                    str = "selected";
+            }
+            <option @str>@a</option>
+        }
+    </select>
+}
+
+@helper comboboxRef(IEnumerable<BankOrderSys.Models.ItemList> list, int type, string name = "", string label = "", string value = "", string title = "", bool required = true)
+{
+    string req = "";
+    if (required)
+    {
+        req = "req";
+    }
+    if (label != ""){
+        <label class="obj_label">@label</label>
+    }
+    <select class="form-control @req" name="@name" title="@title">
+        <option></option>
+        @foreach (var a in list){
+            if (a.type == type){
+                string str = "";
+                if (a.title == value) {
+                    str = "selected";
+                }
+                <option @str>@a.title</option>
+            }
+        }
+    </select>
+}
+
+@helper InitLists(List<string> week_days_l, List<string> type_money_l, List<string> type_adress_l, List<string> type_city_l)
+{
+    type_adress_l.Add("тип 1");
+    type_adress_l.Add("тип 2");
+    type_adress_l.Add("тип 3");
+
+    type_city_l.Add("тип 1");
+    type_city_l.Add("тип 2");
+    type_city_l.Add("тип 3");
+
+    type_money_l.Add("BYR");
+    type_money_l.Add("RU");
+    type_money_l.Add("EU");
+    type_money_l.Add("US");
+
+    week_days_l.Add("Понедельник");
+    week_days_l.Add("Вторник");
+    week_days_l.Add("Среда");
+    week_days_l.Add("Четверг");
+    week_days_l.Add("Пятница");
+    week_days_l.Add("Суббота");
+    week_days_l.Add("Воскресенье");
+}

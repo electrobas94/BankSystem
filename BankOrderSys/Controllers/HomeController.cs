@@ -245,7 +245,7 @@ namespace BankOrderSys.Controllers
         {
             ViewBag.admin = false;
 
-            ViewBag.ref_book = db_man.ReferenseBook;
+            ViewBag.ref_book = db_man.ReferenseBook.AsEnumerable();
 
             ViewBag.week_days_l = week_days_l;
             ViewBag.type_money_l = type_money_l;

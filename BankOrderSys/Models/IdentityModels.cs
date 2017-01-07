@@ -31,5 +31,7 @@ namespace BankOrderSys.Models
         }
 
         public System.Data.Entity.DbSet<BankOrderSys.Models.OrderFormView> OrderFormViews { get; set; }
+
+        public System.Data.Entity.DbSet<BankOrderSys.Models.ObjectIncasation> ObjectIncasations { get; set; }
     }
 }
