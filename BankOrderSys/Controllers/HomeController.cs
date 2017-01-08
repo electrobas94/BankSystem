@@ -13,8 +13,7 @@ namespace BankOrderSys.Controllers
 {
     public class HomeController : Controller
     {
-        List<string> bank_dep_l     = new List<string>();
-
+        List<string> bank_dep_l = new List<string>();
         ManagerDB db_man = new ManagerDB();
 
         [Authorize]
@@ -27,50 +26,32 @@ namespace BankOrderSys.Controllers
         [HttpGet]
         public ActionResult Lists(int? act, int? type, int? id, string value)
         {
-                switch(act)
-                {
-                    //add new
-                    case 1:
-                        ItemList tmp = new ItemList();
-                        tmp.title = "Новый";
-                        tmp.type = (int)type;
-                        db_man.ReferenseBook.Add(tmp);
-                        db_man.SaveChanges();
-                        break;
-
-                    //del item
-                    case 2:
-                        if (id == null)
-                            break;
-                        ItemList del_item = db_man.ReferenseBook.Find((int)id);
-                        db_man.Entry(del_item).State = EntityState.Deleted;
-                        db_man.SaveChanges();
-                        break;
-
-                    //modify item
-                    case 3:
-                        if (id == null || value == null)
-                            break;
-                        ItemList mod_item = db_man.ReferenseBook.Find((int)id);
-                        mod_item.title = value;
-                        db_man.SaveChanges();
-                        break;
+            switch(act)
+            {
+                case 1:
+                    if (type != null)
+                        db_man.AddRefItem((int)type);
+                    break;
+                case 2:
+                    if (id != null)
+                        db_man.DelRefItemById((int)id);
+                    break;
+                case 3:
+                    if (id != null && value != null)
+                        db_man.UpdateRefItem((int)id, value);
+                    break;
             }
             return View(db_man.ReferenseBook);
         }
 
         [Authorize]
         [HttpGet]
-        public ActionResult Sign(int id)
+        public ActionResult Sign(int? id)
         {
-            OrderFormView tmp = db_man.OrderList.Find(id);
+            if(id != null)
+                db_man.OrderSign((int)id);
 
-            tmp.status = "Подписан";
-
-            db_man.Entry(tmp).State = EntityState.Modified;
-            db_man.SaveChanges();
-
-            return RedirectToAction("Index");//"Index"
+            return RedirectToAction("Index");
         }
 
         [Authorize]
@@ -97,79 +78,94 @@ namespace BankOrderSys.Controllers
 
             var order_list = db_man.OrderList.AsQueryable();
 
-            if(date != null)
-            {
-                switch(date)
-                {
-                    case 0:break;//no date sort
-                    case 1:
-                        if (date_start == "" || date_start == null)
-                            break;
-                        if (date_end == "" || date_end == null)
-                            break;
+            order_list = FilterOrders(order_list, type, status, date, date_start, date_end);
 
-                        date_start.Split('.');
-                        DateTime d_s = DateTime.ParseExact(date_start, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
-                        DateTime d_e = DateTime.ParseExact(date_end,    "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
-
-                        order_list = order_list.Where(c => ( d_s <= c.date && d_e >= c.date ));
-
-                        break;//period
-                    case 2:
-                        DateTimeFormatInfo dfi = DateTimeFormatInfo.CurrentInfo;
-                        Calendar cal= dfi.Calendar;
-                        int now_week = cal.GetWeekOfYear(DateTime.Now, dfi.CalendarWeekRule, dfi.FirstDayOfWeek);
-
-                        //order_list = order_list.Where(c => ( cal.GetWeekOfYear(c.date, dfi.CalendarWeekRule, dfi.FirstDayOfWeek) == now_week) );
-
-                        var obj_tmp_l = order_list.ToList();
-                        var n_obj_l = new List<OrderFormView>();
-
-                        foreach (var obj in obj_tmp_l)
-                            if(cal.GetWeekOfYear(obj.date, dfi.CalendarWeekRule, dfi.FirstDayOfWeek) == now_week)
-                                n_obj_l.Add(obj);
-
-                        order_list = n_obj_l.AsQueryable();
-
-                        break;//week
-                    case 3:
-                        order_list = order_list.Where(c => c.date.Month == DateTime.Now.Month );
-                        break;//mounth
-                }
-            }
-
-            if(status != null && status != "")
-            {
-                order_list = order_list.Where(c => c.status == status);
-            }
-
-            if (type != null && type != "")
-            {
-                order_list = order_list.Where(c => c.type == type);
-            }
-
-            if(sort != null)
-            {
-                switch (Math.Abs((int)sort))
-                {
-                    case 1:
-                        order_list = order_list.OrderBy(obj => obj.date);
-                        break;
-                    case 2:
-                        order_list = order_list.OrderBy(obj => obj.number);
-                        break;
-                    case 3:
-                        order_list = order_list.OrderBy(obj => obj.status);
-                        break;
-                }
-
-            }
+            if (sort != null)
+                order_list = SortOrders( order_list, (Math.Abs( (int)sort) ) );
 
             var model = order_list.AsEnumerable();
             if ( sort != null && sort < 0)
                 model = model.Reverse();
 
             return View(model);
+        }
+
+        private IQueryable<OrderFormView> FilterOrders(IQueryable<OrderFormView> list, string type, string status, int? date, string date_start, string date_end )
+        {
+            IQueryable<OrderFormView> n_list = list;
+
+            if (date != null)
+            {
+                switch (date)
+                {
+                    case 0: break;//no date sort
+                    case 1:
+                        n_list = FilterDataPeriod(n_list, date_start, date_end);
+
+                        break;//period
+                    case 2:
+                        n_list = FilterDataCurrentWeek(n_list);
+                        break;//week
+                    case 3:
+                        n_list = n_list.Where(c => c.date.Month == DateTime.Now.Month);
+                        break;//mounth
+                }
+            }
+
+            if (status != null && status != "")
+                n_list = n_list.Where(c => c.status == status);
+
+            if (type != null && type != "")
+                n_list = n_list.Where(c => c.type == type);
+
+            return n_list;
+
+        }
+        private IQueryable<OrderFormView> FilterDataPeriod( IQueryable<OrderFormView> list, string date_start, string date_end )
+        {
+            if (date_start == "" || date_start == null)
+                if (date_end == "" || date_end == null)
+                    return list;
+
+            DateTime d_s = DateTime.ParseExact(date_start, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+            DateTime d_e = DateTime.ParseExact(date_end, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+
+            return list.Where(c => (d_s <= c.date && d_e >= c.date));
+        }
+        private IQueryable<OrderFormView> FilterDataCurrentWeek(IQueryable<OrderFormView> list)
+        {
+            DateTimeFormatInfo dfi = DateTimeFormatInfo.CurrentInfo;
+            Calendar cal = dfi.Calendar;
+            int now_week = cal.GetWeekOfYear(DateTime.Now, dfi.CalendarWeekRule, dfi.FirstDayOfWeek);
+
+            //order_list = order_list.Where(c => ( cal.GetWeekOfYear(c.date, dfi.CalendarWeekRule, dfi.FirstDayOfWeek) == now_week) );
+            //Because LINQ not work
+            var obj_tmp_l = list.ToList();
+            var n_obj_l = new List<OrderFormView>();
+
+            foreach (var obj in obj_tmp_l)
+                if (cal.GetWeekOfYear(obj.date, dfi.CalendarWeekRule, dfi.FirstDayOfWeek) == now_week)
+                    n_obj_l.Add(obj);
+
+            return n_obj_l.AsQueryable();
+        }
+        private IQueryable<OrderFormView> SortOrders(IQueryable<OrderFormView> list, int type)
+        {
+            IQueryable<OrderFormView> n_list = list;
+            switch ( type )
+            {
+                case 1:
+                    n_list = n_list.OrderBy(obj => obj.date);
+                    break;
+                case 2:
+                    n_list = n_list.OrderBy(obj => obj.number);
+                    break;
+                case 3:
+                    n_list = n_list.OrderBy(obj => obj.status);
+                    break;
+            }
+
+            return n_list;
         }
 
         [Authorize]
@@ -183,43 +179,30 @@ namespace BankOrderSys.Controllers
         public ActionResult AddOrder(OrderFormView order)
         {
             ViewBag.edit_type = 0;
-
-            db_man.OrderList.Add(order);
-            db_man.SaveChanges();
+            if (order != null)
+                db_man.AddNewOrder(order);
 
             return RedirectToAction("Index");//"Index"
         }
 
         [Authorize]
         [HttpGet]
-        public ActionResult EditOrder(int index)
+        public ActionResult EditOrder(int? index)
         {
-            OrderFormView tmp = db_man.OrderList.Find(index);
-
-            var obj_list = db_man.ObjectList.Where(c => c.OrderFormViewId == index );
-
-            if (obj_list != null)
-                tmp.obj_list = obj_list.ToList();
+            if(index == null)
+                return RedirectToAction("Index");
 
             ViewBag.edit_type = 1;
-            return View("Order", tmp );
+
+            return View("Order", db_man.GetOrderById( (int)index ) );
         }
 
         [Authorize]
         [HttpPost]
         public ActionResult EditOrder(OrderFormView order)
         {
-            var list = db_man.ObjectList.Where(c => c.OrderFormViewId == order.id).AsEnumerable();
-
-            if (list != null)
-                foreach (var obj in list)
-                    db_man.Entry(obj).State = EntityState.Deleted;
-
-            foreach (var obj in order.obj_list)
-                db_man.ObjectList.Add(obj);
-
-            db_man.Entry(order).State = EntityState.Modified;
-            db_man.SaveChanges();
+            if (order != null)
+                db_man.UpdateOrder(order);
 
             return RedirectToAction("Index");
         }
@@ -228,9 +211,8 @@ namespace BankOrderSys.Controllers
         [HttpPost]
         public ActionResult DelOrder(OrderFormView order)
         {
-            order.status = "Удаленная";
-            db_man.Entry(order).State = EntityState.Modified;
-            db_man.SaveChanges();
+            if(order != null)
+                db_man.SetDeletedStateOrder(order);
 
             return RedirectToAction("Index");
         }
@@ -239,20 +221,30 @@ namespace BankOrderSys.Controllers
         [HttpPost]
         public ActionResult AddObj(OrderFormView order, int? edit_type)
         {
+            if (order == null)
+                return RedirectToAction("Index");
+
+            ViewBag.edit_type = edit_type;
+
+            return View( "Order", NewObjOfOrder(order) );
+        }
+        private OrderFormView NewObjOfOrder(OrderFormView order)
+        {
             ObjectIncasation item = new ObjectIncasation();
             item.OrderFormViewId = order.id;
             item.OrderFormView = order;
             order.obj_list.Add(item);
 
-            ViewBag.edit_type = edit_type;
-
-            return View("Order", order);
+            return order;
         }
 
         [Authorize]
         [HttpPost]
         public ActionResult DelObj(OrderFormView order, int? edit_type, int? index)
         {
+            if (order == null)
+                return RedirectToAction("Index");
+
             if (order.obj_list.Count != 0 && index != null )
                 order.obj_list.Remove( order.obj_list.ElementAt( (int)index )) ;
 
