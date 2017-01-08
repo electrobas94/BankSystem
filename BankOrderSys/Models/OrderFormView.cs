@@ -47,7 +47,7 @@ namespace BankOrderSys.Models
         //[Required]
         [Display(Name = "Тип заявки")]
         public string type { get; set; }
-        public string date { get; set; }
+        public DateTime date { get; set; }
         public string status { get; set; }
         //[Required]
         [Display(Name = "Подразделение банка")]

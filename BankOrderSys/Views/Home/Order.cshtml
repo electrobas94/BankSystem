@@ -137,12 +137,12 @@
 
             @if (ViewBag.edit_type == 1){
                 @inputHidden("id", @Model.id.ToString());
-                @inputHidden("date", @Model.date);
+                @inputHidden("date", @Model.date.ToString());
                 @inputHidden("user_name", @Model.user_name);
                 @inputHidden("status", @Model.status);
             }
             else{
-                @inputHidden("date", @DateTime.Now.Date.ToString().Split(' ')[0]);
+                @inputHidden("date", @DateTime.Now.Date.ToString() );
                 @inputHidden("user_name", @User.Identity.GetUserName());
                 @inputHidden("status", "В обработке");
             }

@@ -74,12 +74,14 @@
             <div class="td th">Название организации</div>
             <div class="td th">Название банка</div>
         </div>
-        @foreach (var a in Model){
-            @itemList(a)
-        }
 
         @if (Model == null || Model.Count() == 0){
             <p>К сожалению у вас нет заявок</p>
+        }
+        else{
+            foreach (var a in Model) {
+                @itemList(a)
+            }
         }
     </div>
 </div>
