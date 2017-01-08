@@ -12,10 +12,6 @@ namespace BankOrderSys.Controllers
 {
     public class HomeController : Controller
     {
-        List<string> week_days_l    = new List<string>();
-        List<string> type_money_l   = new List<string>();
-        List<string> type_adress_l  = new List<string>();
-        List<string> type_city_l    = new List<string>();
         List<string> bank_dep_l     = new List<string>();
 
         ManagerDB db_man = new ManagerDB();
@@ -231,10 +227,10 @@ namespace BankOrderSys.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult DelObj(OrderFormView order, int? edit_type)
+        public ActionResult DelObj(OrderFormView order, int? edit_type, int? index)
         {
-            if (order.obj_list.Count != 0)
-                order.obj_list.Remove(order.obj_list.Last());
+            if (order.obj_list.Count != 0 && index != null )
+                order.obj_list.Remove( order.obj_list.ElementAt( (int)index )) ;
 
             ViewBag.edit_type = edit_type;
 
@@ -246,37 +242,11 @@ namespace BankOrderSys.Controllers
             ViewBag.admin = false;
 
             ViewBag.ref_book = db_man.ReferenseBook.AsEnumerable();
-
-            ViewBag.week_days_l = week_days_l;
-            ViewBag.type_money_l = type_money_l;
-            ViewBag.type_adress_l = type_adress_l;
-            ViewBag.type_city_l = type_city_l;
             ViewBag.bank_dep_l = bank_dep_l;
 
             bank_dep_l.Add("Подразделение 1");
             bank_dep_l.Add("Подразделение 2");
             bank_dep_l.Add("Подразделение 3");
-
-            type_adress_l.Add("тип 1");
-            type_adress_l.Add("тип 2");
-            type_adress_l.Add("тип 3");
-
-            type_city_l.Add("тип 1");
-            type_city_l.Add("тип 2");
-            type_city_l.Add("тип 3");
-
-            type_money_l.Add("BYR");
-            type_money_l.Add("RU");
-            type_money_l.Add("EU");
-            type_money_l.Add("US");
-
-            week_days_l.Add("Понедельник");
-            week_days_l.Add("Вторник");
-            week_days_l.Add("Среда");
-            week_days_l.Add("Четверг");
-            week_days_l.Add("Пятница");
-            week_days_l.Add("Суббота");
-            week_days_l.Add("Воскресенье");
         }
 
         protected override void Dispose(bool disposing)
