@@ -1,4 +1,4 @@
-﻿@helper ObjIncasation( BankOrderSys.Models.ObjectIncasation obj, int num, IEnumerable<BankOrderSys.Models.ItemList> list)
+﻿@helper ObjIncasation( BankOrderSys.Models.ObjectIncasation obj, int num, IEnumerable<BankOrderSys.Models.ItemList> list, int edit_type)
 {
     List<string> week_days_l = new List<string>();
     List<string> type_money_l = new List<string>();
@@ -9,7 +9,16 @@
 
     string pre_name = "obj_list[" + num + "].";
     <div class="incasation_obj">
-        <h4>Обьект @num</h4>
+        <h4>
+            Обьект @(num + 1) 
+            <button class="btn btn-default pull-right"
+                    type="submit"
+                    onclick="setRequired(false);"
+                    formmethod="post"
+                    formaction="/Home/DelObj?edit_type=@edit_type&index=@num">
+                Удалить
+            </button>
+        </h4>
         @comboboxRef(list, 0, pre_name + "type_order", "Инкассаторская услуга", obj.type_order, "Инкассаторская услуга для оказания юридическому лицу")
 
         @comboboxRef(list, 2, pre_name + "type_get_money", "Способ сдачи денежной наличности",
@@ -55,11 +64,13 @@
 {
     <h5>@name</h5>
     <div class="delta_time">
-        <div>
-            @input(name_s, "C",  val_s, "Начало работы объекта инкассации в " + @name, false, "time")
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">C:</span>
+            <input type="time" class="form-control" value="@val_s" name="@name_s" title="Начало работы объекта инкассации в @name" />
         </div>
-        <div>
-            @input(name_e, "До", val_e, "Окончание работы объекта инкассации в " + @name, false, "time")
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">До:</span>
+            <input type="time" class="form-control" value="@val_e" name="@name_e" title="Окончание работы объекта инкассации в @name" />
         </div>
     </div>
 }

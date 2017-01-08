@@ -100,9 +100,18 @@ textarea {
     width:49%;
 }
 
-.delta_time div:nth-child(odd){
+.delta_time div span{
     display:inline-block;
-    width:49%;
+    width:19%;
+    padding:6px;
+    padding-left:3px;
+    line-height:20px;
+}
+
+.delta_time div .form-control{
+    display:inline-block;
+    width:80%;
+    float:right;
 }
 
 .incasation_obj{

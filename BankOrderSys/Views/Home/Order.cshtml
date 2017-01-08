@@ -148,34 +148,20 @@
                     </div>
 
                     <div class="panel panel-default">
-                        <div class="panel-heading" style="overflow-y:auto; padding-left:0px; margin-left:0px">
-                            <div class="col-md-12">
-                                <div class="col-md-7" style="padding-left:0px; margin-left:0px">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
-                                            + Обьекты инкасации
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div class="col-md-5">
-                                    <div class="btn-group">
-                                        <button type="submit"
-                                                onclick="setRequired(false);"
-                                                formmethod="post"
-                                                formaction="/Home/AddObj?edit_type=@ViewBag.edit_type"
-                                                class="btn btn-default">
-                                            Добавить объект
-                                        </button>
-                                        <button type="submit"
-                                                onclick="setRequired(false);"
-                                                formmethod="post"
-                                                formaction="/Home/DelObj?edit_type=@ViewBag.edit_type"
-                                                class="btn btn-default">
-                                            Удалить последний объект
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="panel-heading" style="overflow-y:auto;">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                                    + Обьекты инкасации
+                                </a><span>
+                                    <button type="submit"
+                                            onclick="setRequired(false);"
+                                            formmethod="post"
+                                            formaction="/Home/AddObj?edit_type=@ViewBag.edit_type"
+                                            class="btn btn-default pull-right">
+                                        Добавить объект
+                                    </button>
+                                </span>
+                            </h4>
                         </div>
                         <div id="collapse4" class="panel-collapse collapse in">
                             <div class="panel-body">
