@@ -91,14 +91,15 @@
     <input name="@name" title="@title" value="@value" type="@type" class="form-control @req @cls" @number/>
 }
 
-@helper combobox(List<string> list, string name="", string label="", string value="", string title="", bool required = true)
+@helper combobox(List<string> list, string name="", string label="", string value="", 
+                 string title="", bool required = true, string clas = "obj_label")
 {
     string req = "";
     if (required){
         req = "req";
     }
     if (label != ""){
-        <label class="obj_label">@label</label>
+        <label class="@clas">@label</label>
     }
     <select class="form-control @req" name="@name" title="@title">
         <option></option>
@@ -112,7 +113,8 @@
     </select>
 }
 
-@helper comboboxRef(IEnumerable<BankOrderSys.Models.ItemList> list, int type, string name = "", string label = "", string value = "", string title = "", bool required = true)
+@helper comboboxRef(IEnumerable<BankOrderSys.Models.ItemList> list, int type, string name = "", 
+                    string label = "", string value = "", string title = "", bool required = true, string clas= "obj_label")
 {
     string req = "";
     if (required)
@@ -120,7 +122,7 @@
         req = "req";
     }
     if (label != ""){
-        <label class="obj_label">@label</label>
+        <label class="@clas">@label</label>
     }
     <select class="form-control @req" name="@name" title="@title">
         <option></option>

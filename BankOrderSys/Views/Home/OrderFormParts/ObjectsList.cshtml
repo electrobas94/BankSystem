@@ -1,6 +1,15 @@
 ﻿@using BankOrderSys.Models
 @model BankOrderSys.Models.OrderFormView
 
+<div class="btn-group pull-right add_obj">
+    <button type="submit"
+            onclick="setRequired(false);"
+            formmethod="post"
+            formaction="/Home/AddObj?edit_type=@ViewBag.edit_type"
+            class="btn btn-default btn-lg pull-right">
+        Добавить объект
+    </button>
+</div>
 <div>
     <form id="obj_list_incas" method="post" action="/Home/AddObj">
         @for (int i = 0; i < Model.obj_list.Count(); i++) {

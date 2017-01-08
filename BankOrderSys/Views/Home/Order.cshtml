@@ -63,41 +63,11 @@
         <div class="panel-body">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group col-md-6">
-                @Html.LabelFor(model => model.type, htmlAttributes: new { @class = "control-label" })
-                <select class="form-control req"
-                        name="type"
-                        value="@Model.type"
-                        title="Тип заявки, выбираемый при формировании ЭД">
-                    <option></option>
-                    @foreach (var a in ViewBag.ref_book){
-                        if (a.type == 1){
-                            string str = "";
-                            if (a.title == Model.type){
-                                str = "selected";
-                            }
-                            <option @str>@a.title</option>
-                        }
-                    }
-                </select>
-                @Html.ValidationMessageFor(model => model.type, "", new { @class = "text-danger" })
+                @Helpers.comboboxRef(ViewBag.ref_book, 1, "type", "Тип заявки", Model.type, "Тип заявки, выбираемый при формировании ЭД", clas:"")
             </div>
 
             <div class="form-group col-md-6">
-                @Html.LabelFor(model => model.bank_dep, htmlAttributes: new { @class = "control-label" })
-                <select class="form-control req"
-                        name="bank_dep"
-                        title="Подразделения банка, где обслуживается клиент">
-                    <option></option>
-                    @foreach (var a in ViewBag.bank_dep_l)
-                    {
-                        string str = "";
-                        if (a == Model.bank_dep)
-                        { str = "selected"; }
-
-                        <option @str>@a</option>
-                    }
-                </select>
-                @Html.ValidationMessageFor(model => model.BIK, "", new { @class = "text-danger" })
+                @Helpers.combobox(ViewBag.bank_dep_l, "bank_dep", "Подразделения банка", Model.bank_dep, "Подразделения банка, где обслуживается клиент", clas:"")
             </div>
 
             <div class="col-md-12">
@@ -132,6 +102,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
@@ -148,19 +119,11 @@
                     </div>
 
                     <div class="panel panel-default">
-                        <div class="panel-heading" style="overflow-y:auto;">
+                        <div class="panel-heading">
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
                                     + Обьекты инкасации
-                                </a><span>
-                                    <button type="submit"
-                                            onclick="setRequired(false);"
-                                            formmethod="post"
-                                            formaction="/Home/AddObj?edit_type=@ViewBag.edit_type"
-                                            class="btn btn-default pull-right">
-                                        Добавить объект
-                                    </button>
-                                </span>
+                                </a>
                             </h4>
                         </div>
                         <div id="collapse4" class="panel-collapse collapse in">
@@ -169,7 +132,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div><!--accordion end-->
             </div>
 
             @if (ViewBag.edit_type == 1){
