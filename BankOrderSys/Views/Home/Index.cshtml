@@ -24,7 +24,7 @@
         <div class="td" style="width:18%">@elem.title_org</div>
         <div class="td" style="width:18%">
             @elem.title_bank
-            @if (ViewBag.admin)
+            @if (ViewBag.admin && elem.status == "В обработке")
             {
                 <span>
                     <button onclick="window.location.href = '/Home/Sign?id=@elem.id';event.stopPropagation();"

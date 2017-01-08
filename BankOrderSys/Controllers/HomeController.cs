@@ -194,6 +194,14 @@ namespace BankOrderSys.Controllers
         [HttpPost]
         public ActionResult EditOrder(OrderFormView order)
         {
+            var list = db_man.ObjectList.Where(c => c.OrderFormViewId == order.id).AsEnumerable();
+
+            if (list != null)
+                foreach (var obj in list)
+                    db_man.Entry(obj).State = EntityState.Deleted;
+
+            foreach (var obj in order.obj_list)
+                db_man.ObjectList.Add(obj);
 
             db_man.Entry(order).State = EntityState.Modified;
             db_man.SaveChanges();
@@ -205,7 +213,6 @@ namespace BankOrderSys.Controllers
         [HttpPost]
         public ActionResult DelOrder(OrderFormView order)
         {
-
             order.status = "Удаленная";
             db_man.Entry(order).State = EntityState.Modified;
             db_man.SaveChanges();
@@ -218,6 +225,8 @@ namespace BankOrderSys.Controllers
         public ActionResult AddObj(OrderFormView order, int? edit_type)
         {
             ObjectIncasation item = new ObjectIncasation();
+            item.OrderFormViewId = order.id;
+            item.OrderFormView = order;
             order.obj_list.Add(item);
 
             ViewBag.edit_type = edit_type;

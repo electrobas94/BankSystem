@@ -44,12 +44,12 @@
 
         @combobox(week_days_l, pre_name + "week_day", "День недели", obj.week_day, "День недели, выбираемый для оказания услуг по объекту инкассации")
 
-        @time_period("Рабочие дни", obj.work_time_start,    obj.work_time_end,   "work_time_start",     "work_time_end")
-        @time_period("Суббота",     obj.saturd_time_start,  obj.saturd_time_end, "saturd_time_start",   "saturd_time_end")
-        @time_period("Воскресенье", obj.sund_time_start,    obj.sund_time_end,   "sund_time_start",     "sund_time_end")
+        @time_period("Рабочие дни", obj.work_time_start,    obj.work_time_end,   pre_name + "work_time_start",   pre_name + "work_time_end")
+        @time_period("Суббота",     obj.saturd_time_start,  obj.saturd_time_end, pre_name + "saturd_time_start", pre_name + "saturd_time_end")
+        @time_period("Воскресенье", obj.sund_time_start,    obj.sund_time_end,   pre_name + "sund_time_start",   pre_name + "sund_time_end")
 
         @combobox(type_adress_l, pre_name + "type_adress", "Тип адреса", obj.type_adress)
-        @combobox(type_city_l, pre_name + "type_city", "Тип населенного пункта", obj.type_city, "Тип населенного пункта, в котором находится объект инкассации")
+        @combobox(type_city_l,   pre_name + "type_city",   "Тип населенного пункта", obj.type_city, "Тип населенного пункта, в котором находится объект инкассации")
 
         @input(pre_name + "title_city", "Наименование населенного пункта", obj.title_city, 
                "Наименование населенного пункта, в котором находится объект инкассации", true)
