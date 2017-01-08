@@ -45,9 +45,7 @@
     <textarea name="title_bank" 
               class="form-control req"  
               rows="3" 
-              title="Наименование банка, в который требуется инкассировать денежные средства">
-        @Model.title_bank
-    </textarea>
+              title="Наименование банка, в который требуется инкассировать денежные средства">@Model.title_bank</textarea>
     @Html.ValidationMessageFor(model => model.title_bank, "", new { @class = "text-danger" })
 </div>
 
@@ -56,8 +54,6 @@
     <textarea name="other_rec_bank" 
               class="form-control" 
               rows="3"
-              title="Указывается дополнительная информация">
-        @Model.other_rec_bank
-    </textarea>
+              title="Указывается дополнительная информация">@Model.other_rec_bank</textarea>
     @Html.ValidationMessageFor(model => model.other_rec_bank, "", new { @class = "text-danger" })
 </div>

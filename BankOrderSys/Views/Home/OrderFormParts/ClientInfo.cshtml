@@ -36,8 +36,6 @@
     @Html.LabelFor(model => model.title_org, htmlAttributes: new { @class = "control-label" })
     <textarea name="title_org" 
               class="form-control req" 
-              rows="3">
-        @Model.title_org
-    </textarea>
+              rows="3">@Model.title_org</textarea>
     @Html.ValidationMessageFor(model => model.title_org, "", new { @class = "text-danger" })
 </div>

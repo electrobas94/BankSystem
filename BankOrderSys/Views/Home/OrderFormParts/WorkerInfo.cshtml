@@ -14,8 +14,6 @@
     <textarea name="name_worker" 
               class = "form-control req"  
               rows = "3" 
-              title="ФИО, Должность">
-        @Model.name_worker
-    </textarea>
+              title="ФИО, Должность">@Model.name_worker</textarea>
     @Html.ValidationMessageFor(model => model.name_worker, "", new { @class = "text-danger" })
 </div>
