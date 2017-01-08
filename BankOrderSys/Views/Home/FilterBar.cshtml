@@ -75,10 +75,8 @@
             <option value="">
                 Не выбран
             </option>
-            @foreach (var a in ViewBag.ref_book)
-            {
-                if (a.type == 1)
-                {
+            @foreach (var a in ViewBag.ref_book){
+                if (a.type == 1){
                     <option @isSelectedType(@a.title)>
                         @a.title
                     </option>

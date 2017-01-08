@@ -7,6 +7,7 @@ using BankOrderSys.Models;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Data.Entity.Core.Objects;
+using System.Globalization;
 
 namespace BankOrderSys.Controllers
 {
@@ -109,16 +110,30 @@ namespace BankOrderSys.Controllers
 
                         date_start.Split('.');
                         DateTime d_s = DateTime.ParseExact(date_start, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
-                        DateTime d_e = DateTime.ParseExact(date_end, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+                        DateTime d_e = DateTime.ParseExact(date_end,    "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
 
-                        order_list = order_list.Where(c => ( d_s <= Convert.ToDateTime(c.date) && d_e >= Convert.ToDateTime(c.date) ));
+                        order_list = order_list.Where(c => ( d_s <= c.date && d_e >= c.date ));
 
                         break;//period
                     case 2:
-                        order_list = order_list.Where(c => Convert.ToDateTime(c.date).DayOfWeek == DateTime.Today.DayOfWeek);
+                        DateTimeFormatInfo dfi = DateTimeFormatInfo.CurrentInfo;
+                        Calendar cal= dfi.Calendar;
+                        int now_week = cal.GetWeekOfYear(DateTime.Now, dfi.CalendarWeekRule, dfi.FirstDayOfWeek);
+
+                        //order_list = order_list.Where(c => ( cal.GetWeekOfYear(c.date, dfi.CalendarWeekRule, dfi.FirstDayOfWeek) == now_week) );
+
+                        var obj_tmp_l = order_list.ToList();
+                        var n_obj_l = new List<OrderFormView>();
+
+                        foreach (var obj in obj_tmp_l)
+                            if(cal.GetWeekOfYear(obj.date, dfi.CalendarWeekRule, dfi.FirstDayOfWeek) == now_week)
+                                n_obj_l.Add(obj);
+
+                        order_list = n_obj_l.AsQueryable();
+
                         break;//week
                     case 3:
-                        order_list = order_list.Where(c => Convert.ToDateTime( c.date ).Month == DateTime.Today.Month );
+                        order_list = order_list.Where(c => c.date.Month == DateTime.Now.Month );
                         break;//mounth
                 }
             }
